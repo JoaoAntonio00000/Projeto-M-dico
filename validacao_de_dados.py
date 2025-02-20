@@ -79,3 +79,24 @@ def validar_cpf(cpf):
             return False
     
     return True
+
+def validar_cpf_paciente(cpf):
+    cpf = cpf.replace("-", '').replace(".", '')
+    if not cpf:
+        console.print("[bold red]O CPF é obrigatório.")
+        return False   
+    if len(cpf) != 11 or cpf == cpf[0] * 11:
+        console.print("[bold red]CPF inválido.")
+        return False
+    
+    soma_1 = sum(int(cpf[i]) * (10 - i) for i in range(9))
+    resto_1 = soma_1 % 11
+    digito_1 = 0 if resto_1 < 2 else 11 - resto_1
+    
+    soma_2 = sum(int(cpf[i]) * (11 - i) for i in range(10))
+    resto_2 = soma_2 % 11
+    digito_2 = 0 if resto_2 < 2 else 11 - resto_2
+    
+    if cpf[-2:] != f"{digito_1}{digito_2}":
+        console.print("[bold red]CPF inválido.")
+        return False
