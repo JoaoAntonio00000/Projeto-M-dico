@@ -41,9 +41,9 @@ def salvar_dados(dados):
 dados_email = carregar_dados()
 
 if dados_email:
-    usuario_id = max(usuario["ID"] for usuario in dados_email) + 1
+    medico_id = max(usuario["ID"] for usuario in dados_email) + 1
 else:
-    usuario_id = 1
+    medico_id = 1
 
 def validar_horario(horario):
     try:
@@ -57,12 +57,14 @@ def validar_email(email):
     regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     return re.match(regex, email) is not None
 
-def adicionar_contato():
-    global usuario_id
-
+def adicionar_medico():
+    global medico_id
+    dia_da_semana = ["Segunda".,"Terça","Quarta","Quinta","Sexta","Sabado","Domingo"]
     while True:
         nome = console.input("[bold yellow]Informe o nome do usuário: [/bold yellow]").strip()
         email = console.input("[bold yellow]Informe o email do usuário: [/bold yellow]").strip()
+        crm = console.input("[bold yellow]Informe o crm do médico: ").strip()
+        dia-da-semana = ("[bold yellow]Informe o dia da semana que o médico irá trabalhar: ").strip()
         if not validar_email(email):
             console.print("[bold red]E-mail inválido![/bold red]")
             continue
@@ -74,7 +76,7 @@ def adicionar_contato():
             continue
 
         novo_usuario = {
-            "ID": usuario_id,
+            "ID": medico_id,
             "Nome": nome,
             "E-mail": email,
             "Mensagem": mensagem,
@@ -82,7 +84,7 @@ def adicionar_contato():
             "Enviado": False
         }
         dados_email.append(novo_usuario)
-        usuario_id += 1
+        medico_id += 1
 
         continuar = console.input("[bold yellow]Deseja continuar? (S/N): [/bold yellow]").strip().lower()
         if continuar == "n":
