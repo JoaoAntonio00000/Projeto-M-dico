@@ -1,0 +1,280 @@
+[
+    {
+        "ID": 1,
+        "Nome": "kley",
+        "E-mail": "k@gmail.com",
+        "CPF": "639.831.590-10",
+        "CRM": "2345/MT",
+        "Genero": "F",
+        "Especialização": "Ortopedia",
+        "Convenio": [
+            "NotreDame Intermédica",
+            "SulAmérica Saúde"
+        ],
+        "Hora do Medico": {
+            "Segunda": {
+                "8": true,
+                "9": true,
+                "10": true,
+                "11": true,
+                "13": true,
+                "14": true,
+                "15": true,
+                "16": true,
+                "17": true
+            },
+            "Terça": {
+                "8": true,
+                "9": true,
+                "10": true,
+                "11": true,
+                "13": true,
+                "14": true,
+                "15": true,
+                "16": true,
+                "17": true
+            },
+            "Quarta": {
+                "8": true,
+                "9": true,
+                "10": true,
+                "11": true,
+                "13": true,
+                "14": true,
+                "15": true,
+                "16": true,
+                "17": true
+            },
+            "Quinta": {
+                "8": true,
+                "9": true,
+                "10": true,
+                "11": true,
+                "13": true,
+                "14": true,
+                "15": true,
+                "16": true,
+                "17": true
+            },
+            "Sexta": {
+                "8": true,
+                "9": true,
+                "10": true,
+                "11": true,
+                "13": true,
+                "14": true,
+                "15": true,
+                "16": true,
+                "17": true
+            }
+        }
+    },
+    {
+        "ID": 2,
+        "Nome": "Joao",
+        "E-mail": "j@gmail.com",
+        "CPF": "01810264146",
+        "CRM": "1234/MS",
+        "Genero": "M",
+        "Especialização": "Neurologia",
+        "Convenio": [
+            "Nenhum"
+        ],
+        "Hora do Medico": {
+            "Segunda": {
+                "8": true,
+                "9": true,
+                "10": true,
+                "11": true,
+                "13": true,
+                "14": true,
+                "15": true,
+                "16": true,
+                "17": true
+            },
+            "Terça": {
+                "8": true,
+                "9": true,
+                "10": true,
+                "11": true,
+                "13": true,
+                "14": true,
+                "15": true,
+                "16": true,
+                "17": true
+            },
+            "Quarta": {
+                "8": true,
+                "9": true,
+                "10": true,
+                "11": true,
+                "13": true,
+                "14": true,
+                "15": true,
+                "16": true,
+                "17": true
+            },
+            "Quinta": {
+                "8": true,
+                "9": true,
+                "10": true,
+                "11": true,
+                "13": true,
+                "14": true,
+                "15": true,
+                "16": true,
+                "17": true
+            },
+            "Sexta": {
+                "8": true,
+                "9": true,
+                "10": true,
+                "11": true,
+                "13": true,
+                "14": true,
+                "15": true,
+                "16": true,
+                "17": true
+            }
+        }
+    },
+    {
+        "ID": 3,
+        "Nome": "Nicole",
+        "E-mail": "nic@gmail.com",
+        "CPF": "020.977.892-00",
+        "CRM": "7895/MG",
+        "Genero": "F",
+        "Especialização": "Oftalmologia",
+        "Convenio": [
+            "Bradesco Saúde",
+            "Unimed"
+        ],
+        "Hora do Medico": {
+            "Segunda": {
+                "8": true,
+                "9": true,
+                "10": true,
+                "11": true,
+                "13": true,
+                "14": true,
+                "15": true,
+                "16": true,
+                "17": true
+            },
+            "Terça": {
+                "8": true,
+                "9": true,
+                "10": true,
+                "11": true,
+                "13": true,
+                "14": true,
+                "15": true,
+                "16": true,
+                "17": true
+            },
+            "Quarta": {
+                "8": true,
+                "9": true,
+                "10": true,
+                "11": true,
+                "13": true,
+                "14": true,
+                "15": true,
+                "16": true,
+                "17": true
+            },
+            "Quinta": {
+                "8": true,
+                "9": true,
+                "10": true,
+                "11": true,
+                "13": true,
+                "14": true,
+                "15": true,
+                "16": true,
+                "17": true
+            },
+            "Sexta": {
+                "8": true,
+                "9": true,
+                "10": true,
+                "11": true,
+                "13": true,
+                "14": true,
+                "15": true,
+                "16": true,
+                "17": true
+            }
+        }
+    },
+    {
+        "ID": 4,
+        "Nome": "Dhiogo",
+        "E-mail": "Dhi@gmail.com",
+        "CPF": "974.876.111-83",
+        "CRM": "4598/MT",
+        "Genero": "M",
+        "Especialização": "Hematologia",
+        "Convenio": [
+            "Nenhum"
+        ],
+        "Hora do Medico": {
+            "Segunda": {
+                "8": true,
+                "9": true,
+                "10": true,
+                "11": true,
+                "13": true,
+                "14": true,
+                "15": true,
+                "16": true,
+                "17": true
+            },
+            "Terça": {
+                "8": true,
+                "9": true,
+                "10": true,
+                "11": true,
+                "13": true,
+                "14": true,
+                "15": true,
+                "16": true,
+                "17": true
+            },
+            "Quarta": {
+                "8": true,
+                "9": true,
+                "10": true,
+                "11": true,
+                "13": true,
+                "14": true,
+                "15": true,
+                "16": true,
+                "17": true
+            },
+            "Quinta": {
+                "8": true,
+                "9": true,
+                "10": true,
+                "11": true,
+                "13": true,
+                "14": true,
+                "15": true,
+                "16": true,
+                "17": true
+            },
+            "Sexta": {
+                "8": true,
+                "9": true,
+                "10": true,
+                "11": true,
+                "13": true,
+                "14": true,
+                "15": true,
+                "16": true,
+                "17": true
+            }
+        }
+    }
+]
