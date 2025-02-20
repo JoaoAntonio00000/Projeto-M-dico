@@ -8,7 +8,7 @@ criar a lista de pacientes a serem cadastrados
 
 lista_convenio = {
     'UNIMED' : 0.5,
-    
+
 }
 
 
@@ -47,3 +47,19 @@ def cadastrar():
         #código de conta do convenio - verificar preços com o pessoal
         print() # só pro código n ficar dando erro
     
+    dados = carregar_dados()
+
+    for paciente in dados['pacientes']:
+        if paciente['cpf'] == cpf:
+            print('Paciente já cadastrado, tente com outro cpf')
+            return
+        
+
+    dados['pacientes'].append({
+        'nome' : nome,
+        'cpf' : cpf,
+        'telefone' : telefone,
+        'email' : email,
+        'cep' : cep,
+        'convenio' : convenio
+    })
