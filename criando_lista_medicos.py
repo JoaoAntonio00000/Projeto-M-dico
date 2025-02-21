@@ -93,7 +93,7 @@ def adicionar_medico():
             "CPF":cpf,
             "CRM": crm,
             "Genero": genero,
-            "Especialização": especializacao,
+            "Especializacao": especializacao,
             "Convenio": convenio,
             "Hora do Medico": {
                 'Segunda': {"8": True, "9": True, "10": True, "11": True, "13": True, "14": True, "15": True, "16": True, "17": True},

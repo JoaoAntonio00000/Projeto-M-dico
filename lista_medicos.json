@@ -6,7 +6,7 @@
         "CPF": "639.831.590-10",
         "CRM": "2345/MT",
         "Genero": "F",
-        "Especialização": "Ortopedia",
+        "especializacao": "Ortopedia",
         "Convenio": [
             "NotreDame Intermédica",
             "SulAmérica Saúde"
@@ -76,7 +76,7 @@
         "CPF": "01810264146",
         "CRM": "1234/MS",
         "Genero": "M",
-        "Especialização": "Neurologia",
+        "especializacao": "Neurologia",
         "Convenio": [
             "Nenhum"
         ],
@@ -145,7 +145,7 @@
         "CPF": "020.977.892-00",
         "CRM": "7895/MG",
         "Genero": "F",
-        "Especialização": "Oftalmologia",
+        "especializacao": "Oftalmologia",
         "Convenio": [
             "Bradesco Saúde",
             "Unimed"
@@ -215,7 +215,7 @@
         "CPF": "974.876.111-83",
         "CRM": "4598/MT",
         "Genero": "M",
-        "Especialização": "Hematologia",
+        "especializacao": "Hematologia",
         "Convenio": [
             "Nenhum"
         ],
