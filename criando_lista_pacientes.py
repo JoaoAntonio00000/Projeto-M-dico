@@ -15,6 +15,13 @@ lista_convenio = {
     'HAPVIDA' : 0.2,
     'nao' : 0
 }
+
+lista_genero = {
+    '1' : 'Feminino',
+    '2' : 'Masculino',
+    '3' : 'Não Binário',
+    '4' : 'Prefiro não dizer'
+}
 #pesquisar mais depoios 
 
 
@@ -58,9 +65,10 @@ def cadastrar():
     global id_paciente
 
     nome = input('Nome completo do paciente: ').strip()
-    
-    print('\nPor favor, indique o gênero do paciente:\n1. Feminino\n2. Masculino\n3. Não binário\n4. Prefiro não dizer')
-    genero = input('Digite o gênero do paciente: ').strip()
+
+    for chave, genero in lista_genero.items():
+        print(f"{chave} - {genero}")
+    genero = int(input('Digite o gênero do paciente: '))
 
     data_nascimento = input('Digite a data de nascimento (DD/MM/AAAA): ').strip()
     data_formatada = validar_data(data_nascimento)
@@ -94,7 +102,9 @@ def cadastrar():
         if validar_email(email):
             break
         
-    print(convenio)
+    for chave, genero in lista_convenio.items():
+        print(f"{chave} - {genero}")
+
     convenio = input('Digite qual o convênio do paciente(caso nao possua digitar "nao"): ').strip().upper()
 
     
