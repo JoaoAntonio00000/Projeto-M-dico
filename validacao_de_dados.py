@@ -100,3 +100,12 @@ def validar_cpf_paciente(cpf):
     if cpf[-2:] != f"{digito_1}{digito_2}":
         console.print("[bold red]CPF inválido.")
         return False
+    
+
+def validar_data(data):
+    try:
+        data_formatada = datetime.datetime.strptime(data, "%d/%m/%Y").strftime("%d/%m/%Y")
+        return data_formatada
+    except ValueError:
+        print('⚠️ Data inválida! Tente novamente no formato DD/MM/AAAA.')
+        return None
