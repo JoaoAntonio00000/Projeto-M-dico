@@ -10,6 +10,17 @@
             "email": true,
             "cep": "78057-035",
             "convenio": "0"
+        },
+        {
+            "ID_PACIENTE": 2,
+            "nome": "Felipe Clink",
+            "genero": 0,
+            "data_nascimento": "28/08/2004",
+            "cpf": "123.456.789-09",
+            "telefone": "(65)99904-3645",
+            "email": "felipespiderman04@gmail.com",
+            "cep": true,
+            "convenio": "NAO"
         }
     ]
 }
