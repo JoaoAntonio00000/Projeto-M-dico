@@ -63,25 +63,30 @@ def cadastrar():
     print('\nPor favor, indique o gênero do paciente:\n1. Feminino\n2. Masculino\n3. Não binário\n4. Prefiro não dizer')
     genero = input('Digite o gênero do paciente: ').strip()
 
-    # Validação de data de nascimento
     data_nascimento = input('Digite a data de nascimento (DD/MM/AAAA): ').strip()
     data_formatada = validar_data(data_nascimento)
     if not data_formatada:
         print("⚠️ Data inválida! Tente novamente.")
+        return  # Sai da função para evitar cadastrar o paciente com dados inválidos
     else:
         print(f"Data válida: {data_formatada}")
+
 
     if not data_formatada:
         print("⚠️ Data inválida! Tente novamente.")
         return
 
     # Validação de CPF
-    cpf = input('Digite o CPF do paciente (apenas números): ').strip()
-    cpf_validado = validar_cpf_paciente(cpf)
+    while True:
+        try:
+            cpf = input('Digite o CPF do paciente (apenas números): ').strip()
+            cpf_validado = validar_cpf_paciente(cpf)
+            break
+        except:
+            print("⚠️ CPF inválido! Tente novamente.")
+            return
 
-    if not cpf_validado:
-        print("⚠️ CPF inválido! Tente novamente.")
-        return
+        
 
     telefone = input('Digite o telefone do paciente: ').strip()
     cep = input('Digite o CEP do paciente: ').strip()

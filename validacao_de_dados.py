@@ -102,22 +102,33 @@ def validar_cpf_paciente(cpf):
         return False
     
 
+
+
 def validar_data(data):
     # Remover espaços extras antes e depois da string
     data = data.strip()
-    
     # Verifica se a data tem 10 caracteres e está no formato DD/MM/AAAA
     if len(data) != 10 or data[2] != '/' or data[5] != '/':
         print("⚠️ Data inválida! O formato correto é DD/MM/AAAA.")
         return False
 
     try:
-        # Tenta analisar a data com o formato correto
+        
         data_formatada = datetime.datetime.strptime(data, "%d/%m/%Y")
-        return data_formatada.strftime("%d/%m/%Y")  # Retorna a data formatada no padrão desejado
+        return data_formatada.strftime("%d/%m/%Y") 
     except ValueError:
-        # Retorna False se não conseguir fazer a formatação da data
         print("⚠️ Data inválida! O formato correto é DD/MM/AAAA.")
+        return False
+    
+
+def validar_telefone(telefone):
+    # Expressão regular para validar o formato (00)00000-0000
+    padrao = r'^\(\d{2}\)\d{5}-\d{4}$'
+    
+    if re.match(padrao, telefone):
+        return telefone  
+    else:
+        print("⚠️ Telefone inválido! O formato correto é (00)00000-0000 (coloque o DDD).")
         return False
 
 
