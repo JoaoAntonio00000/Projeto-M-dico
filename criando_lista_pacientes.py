@@ -1,4 +1,5 @@
 import datetime
+from datetime import date, datetime
 import json
 import os
 from validacao_de_dados import validar_cpf_paciente, validar_data, validar_email
@@ -44,12 +45,12 @@ def salvar_dados(dados):
 
 
 dados_paciente = carregar_dados()
+
 if dados_paciente:
     if dados_paciente['pacientes']:
         id_paciente = max(usuario["ID_PACIENTE"] for usuario in dados_paciente['pacientes']) + 1
     else:
         id_paciente = 1
-
 
 
 # Função para cadastrar um novo paciente
@@ -59,12 +60,16 @@ def cadastrar():
 
     nome = input('Nome completo do paciente: ').strip()
     
-    print('Por favor, indique o gênero do paciente:\n1. Feminino\n2. Masculino\n3. Não binário\n4. Prefiro não dizer')
+    print('\nPor favor, indique o gênero do paciente:\n1. Feminino\n2. Masculino\n3. Não binário\n4. Prefiro não dizer')
     genero = input('Digite o gênero do paciente: ').strip()
 
     # Validação de data de nascimento
     data_nascimento = input('Digite a data de nascimento (DD/MM/AAAA): ').strip()
     data_formatada = validar_data(data_nascimento)
+    if not data_formatada:
+        print("⚠️ Data inválida! Tente novamente.")
+    else:
+        print(f"Data válida: {data_formatada}")
 
     if not data_formatada:
         print("⚠️ Data inválida! Tente novamente.")
@@ -129,9 +134,9 @@ def procurar_paciente():
                 f"Email: {paciente['email']}\n"
                 f"CEP: {paciente['cep']}\n"
                 f"Convênio: {paciente['convenio']}")
-        return
-
+            
     print('⚠️ Paciente não encontrado.')
+
 
 # Menu para rodar no terminal
 while True:
