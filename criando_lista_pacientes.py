@@ -30,16 +30,14 @@ def verificar_se_arquivo_existe():
         with open(pacientes_json, 'w', encoding="utf-8") as arquivo:
             json.dump({'pacientes': []}, arquivo, indent=4)
         return {'pacientes': []}
-
-# Garante que o arquivo json exista antes de começar
 verificar_se_arquivo_existe()
 
-# Função para carregar os dados do arquivo json
+# Carregar os dados
 def carregar_dados():
     with open(pacientes_json, 'r', encoding="utf-8") as arquivo:
         return json.load(arquivo)
 
-# Função para salvar os dados no arquivo json
+# Salvar os dados
 def salvar_dados(dados):
     with open(pacientes_json, 'w', encoding="utf-8") as arquivo:  
         json.dump(dados, arquivo, indent=4)
@@ -87,14 +85,22 @@ def cadastrar():
             print("⚠️ CPF inválido! Tente novamente.")
             return
         
+    dados = carregar_dados()
+
+    for paciente in dados['pacientes']:
+        if paciente['cpf'] == cpf_validado:
+            print('⚠️ Paciente já cadastrado. Tente com outro CPF.')
+            return
+        
     telefone = input('Digite o telefone do paciente: ').strip()
     cep = input('Digite o CEP do paciente: ').strip()
     cep_validado = validar_cep(cep)
     email = input('Digite o e-mail do paciente: ').strip()
     email_validado = validar_email(email)
-    convenio = input('Digite qual o convênio do paciente(caso nao possua digitar "nao"): ').strip()
+    print(convenio)
+    convenio = input('Digite qual o convênio do paciente(caso nao possua digitar "nao"): ').strip().upper()
 
-    # Carregar os dados atuais
+    
     dados = carregar_dados()
     # Verifica se o CPF já está cadastrado
     for paciente in dados['pacientes']:
