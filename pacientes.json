@@ -21,6 +21,17 @@
             "email": "felipespiderman04@gmail.com",
             "cep": true,
             "convenio": "NAO"
+        },
+        {
+            "ID_PACIENTE": 3,
+            "nome": "joao",
+            "genero": 0,
+            "data_nascimento": "10/02/1999",
+            "cpf": "01810264146",
+            "telefone": "65999337535",
+            "email": "zabotte@gmail.com",
+            "cep": false,
+            "convenio": "UNIMED"
         }
     ]
 }

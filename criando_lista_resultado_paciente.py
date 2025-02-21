@@ -60,7 +60,8 @@ def buscar_paciente(id_paciente):
     return None
 
 def buscar_medico():
-    for medico in abrir_dados_medicos
+    for medico in dados_medicos:
+
 
 def adicionar_exame_resultado():
     id_paciente = int(input("Digite o ID do paciente: "))
