@@ -15,6 +15,13 @@ lista_convenio = {
     'HAPVIDA' : 0.2,
     'nao' : 0
 }
+
+lista_genero = {
+    '1' : 'Feminino',
+    '2' : 'Masculino',
+    '3' : 'Não Binário',
+    '4' : 'Prefiro não dizer'
+}
 #pesquisar mais depoios 
 
 
@@ -58,9 +65,10 @@ def cadastrar():
     global id_paciente
 
     nome = input('Nome completo do paciente: ').strip()
-    
-    print('\nPor favor, indique o gênero do paciente:\n1. Feminino\n2. Masculino\n3. Não binário\n4. Prefiro não dizer')
-    genero = input('Digite o gênero do paciente: ').strip()
+
+    for chave, genero in lista_genero.items():
+        print(f"{chave} - {genero}")
+    genero = int(input('Digite o gênero do paciente: '))
 
     data_nascimento = input('Digite a data de nascimento (DD/MM/AAAA): ').strip()
     data_formatada = validar_data(data_nascimento)
@@ -77,28 +85,32 @@ def cadastrar():
 
     # Validação de CPF
     while True:
-        try:
-            cpf = input('Digite o CPF do paciente (apenas números): ').strip()
-            cpf_validado = validar_cpf_paciente(cpf)
-            break
-        except:
-            print("⚠️ CPF inválido! Tente novamente.")
-            return
+            cpf = input('Digite o CPF do paciente: ').strip()
+            if validar_cpf_paciente:
+                break
+            else:
+                print("⚠️ CPF inválido! Tente novamente.")
+                return
 
         
     telefone = input('Digite o telefone do paciente: ').strip()
     cep = input('Digite o CEP do paciente: ').strip()
     cep_validado = validar_cep(cep)
-    email = input('Digite o e-mail do paciente: ').strip()
-    email_validado = validar_email(email)
-    print(convenio)
+    while True:
+        email = input('Digite o e-mail do paciente: ').strip()
+        if validar_email(email):
+            break
+        
+    for chave, genero in lista_convenio.items():
+        print(f"{chave} - {genero}")
+
     convenio = input('Digite qual o convênio do paciente(caso nao possua digitar "nao"): ').strip().upper()
 
     
     dados = carregar_dados()
     # Verifica se o CPF já está cadastrado
     for paciente in dados['pacientes']:
-        if paciente['cpf'] == cpf_validado:
+        if paciente['cpf'] == cpf:
             print('⚠️ Paciente já cadastrado. Tente com outro CPF.')
             return
 
@@ -108,9 +120,9 @@ def cadastrar():
         'nome': nome,
         'genero': genero,
         'data_nascimento': data_formatada,
-        'cpf': cpf_validado,
+        'cpf': cpf,
         'telefone': telefone,
-        'email': email_validado,
+        'email': email,
         'cep': cep_validado,
         'convenio': convenio
     })

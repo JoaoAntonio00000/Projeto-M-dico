@@ -7,6 +7,16 @@ console = Console()
 # Verificar se o arquivo da lista de médicos existe
 caminho_arquivo = "resultado_pacientes.json"
 
+def abrir_dados_medicos():
+    caminho_medico = "lista_medicos.json"
+    try: 
+        with open(caminho_medico, 'r', encoding='utf-8') as arquivo:
+            json.load(arquivo)
+
+    except (FileNotFoundError, json.JSONDecodeError):
+        console.print("[bold red]Arquivo não encontrado ou corrompido. Retornando lista vazia.[/bold red]")
+        return []
+
 def verificar_se_arquivo_existe():
     if not os.path.exists(caminho_arquivo):
         with open(caminho_arquivo, 'w', encoding='utf-8') as arquivo:
@@ -36,7 +46,7 @@ def salvar_dados(dados):
         console.print(f"[bold red]Erro ao salvar dados: {e}[/bold red]")
 
 dados_resultados = carregar_dados()
-
+dados_medicos = abrir_dados_medicos()
 # Dando ID para os médicos
 if dados_resultados:
     resultados_id = max(usuario["ID"] for usuario in dados_resultados) + 1
@@ -48,6 +58,10 @@ def buscar_paciente(id_paciente):
         if paciente["ID"] == id_paciente:
             return paciente
     return None
+
+def buscar_medico():
+    for medico in dados_medicos:
+
 
 def adicionar_exame_resultado():
     id_paciente = int(input("Digite o ID do paciente: "))
