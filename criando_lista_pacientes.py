@@ -113,7 +113,7 @@ def cadastrar():
         'data_nascimento': data_formatada,
         'cpf': cpf_validado,
         'telefone': telefone,
-        'email': email_validado,
+        'email': email,
         'cep': cep_validado,
         'convenio': convenio
     })
