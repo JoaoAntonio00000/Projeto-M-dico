@@ -84,13 +84,7 @@ def cadastrar():
         except:
             print("⚠️ CPF inválido! Tente novamente.")
             return
-        
-    dados = carregar_dados()
 
-    for paciente in dados['pacientes']:
-        if paciente['cpf'] == cpf_validado:
-            print('⚠️ Paciente já cadastrado. Tente com outro CPF.')
-            return
         
     telefone = input('Digite o telefone do paciente: ').strip()
     cep = input('Digite o CEP do paciente: ').strip()

@@ -123,7 +123,6 @@ def validar_data(data_nascimento):
 
 
 
-
 def validar_telefone(telefone):
     # Expressão regular para validar o formato (00)00000-0000
     padrao = r'^\(\d{2}\)\d{5}-\d{4}$'
@@ -137,7 +136,7 @@ def validar_telefone(telefone):
 def validar_cep(cep):
 
     padrao_cep = r'^\d{5}-\d{3}$'
-    
+
     if re.match(padrao_cep, cep):
         return True
     else:
