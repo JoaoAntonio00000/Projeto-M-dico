@@ -2,7 +2,7 @@ import datetime
 from datetime import date, datetime
 import json
 import os
-from validacao_de_dados import validar_cpf_paciente, validar_data, validar_email
+from validacao_de_dados import validar_cpf_paciente, validar_data, validar_email, validar_telefone, validar_cep
 
 # Lista de convênios - preciso pesquisar mais convenios 
 lista_convenio = {
@@ -12,11 +12,12 @@ lista_convenio = {
     'NOTREDAME-INTERMEDICA' : 0.25,
     'GOLDEN-CROSS' : 0.3,
     'PAX-NACIONAL' : 0.5,
-    'HAPVIDA' : 0.2
+    'HAPVIDA' : 0.2,
+    'nao' : 0
 }
 #pesquisar mais depoios 
 
-# Nome do arquivo json onde os dados serão armazenados
+
 pacientes_json = 'pacientes.json'
 
 # Função para verificar e criar o arquivo json caso ele não exista
@@ -67,7 +68,7 @@ def cadastrar():
     data_formatada = validar_data(data_nascimento)
     if not data_formatada:
         print("⚠️ Data inválida! Tente novamente.")
-        return  # Sai da função para evitar cadastrar o paciente com dados inválidos
+        return  
     else:
         print(f"Data válida: {data_formatada}")
 
@@ -85,17 +86,16 @@ def cadastrar():
         except:
             print("⚠️ CPF inválido! Tente novamente.")
             return
-
         
-
     telefone = input('Digite o telefone do paciente: ').strip()
     cep = input('Digite o CEP do paciente: ').strip()
+    cep_validado = validar_cep(cep)
     email = input('Digite o e-mail do paciente: ').strip()
-    convenio = input('Digite qual o convênio do paciente: ').strip()
+    email_validado = validar_email(email)
+    convenio = input('Digite qual o convênio do paciente(caso nao possua digitar "nao"): ').strip()
 
     # Carregar os dados atuais
     dados = carregar_dados()
-
     # Verifica se o CPF já está cadastrado
     for paciente in dados['pacientes']:
         if paciente['cpf'] == cpf_validado:
@@ -110,8 +110,8 @@ def cadastrar():
         'data_nascimento': data_formatada,
         'cpf': cpf_validado,
         'telefone': telefone,
-        'email': email,
-        'cep': cep,
+        'email': email_validado,
+        'cep': cep_validado,
         'convenio': convenio
     })
 

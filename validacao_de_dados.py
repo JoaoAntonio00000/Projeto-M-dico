@@ -104,22 +104,25 @@ def validar_cpf_paciente(cpf):
 
 
 
-def validar_data(data):
-    # Remover espaços extras antes e depois da string
-    data = data.strip()
-    # Verifica se a data tem 10 caracteres e está no formato DD/MM/AAAA
-    if len(data) != 10 or data[2] != '/' or data[5] != '/':
-        print("⚠️ Data inválida! O formato correto é DD/MM/AAAA.")
+def validar_data(data_nascimento):
+    # Expressão regular para garantir que a data siga o formato DD/MM/AAAA
+    padrao = r'^\d{2}/\d{2}/\d{4}$'
+
+    # Verifica se a data segue o formato esperado
+    if re.match(padrao, data_nascimento):
+        try:
+            # Tenta converter para o formato datetime para verificar se a data é válida
+            data_formatada = datetime.strptime(data_nascimento, "%d/%m/%Y")
+            return data_formatada.strftime("%d/%m/%Y")  # Retorna a data formatada corretamente
+        except ValueError:
+            # Se der erro ao tentar converter, a data não é válida
+            return False
+    else:
+        # Se a data não segue o formato esperado, retorna False
         return False
 
-    try:
-        
-        data_formatada = datetime.datetime.strptime(data, "%d/%m/%Y")
-        return data_formatada.strftime("%d/%m/%Y") 
-    except ValueError:
-        print("⚠️ Data inválida! O formato correto é DD/MM/AAAA.")
-        return False
-    
+
+
 
 def validar_telefone(telefone):
     # Expressão regular para validar o formato (00)00000-0000
@@ -131,4 +134,11 @@ def validar_telefone(telefone):
         print("⚠️ Telefone inválido! O formato correto é (00)00000-0000 (coloque o DDD).")
         return False
 
+def validar_cep(cep):
 
+    padrao_cep = r'^\d{5}-\d{3}$'
+    
+    if re.match(padrao_cep, cep):
+        return True
+    else:
+        return False
