@@ -85,13 +85,12 @@ def cadastrar():
 
     # Validação de CPF
     while True:
-        try:
-            cpf = input('Digite o CPF do paciente (apenas números): ').strip()
-            cpf_validado = validar_cpf_paciente(cpf)
-            break
-        except:
-            print("⚠️ CPF inválido! Tente novamente.")
-            return
+            cpf = input('Digite o CPF do paciente: ').strip()
+            if validar_cpf_paciente:
+                break
+            else:
+                print("⚠️ CPF inválido! Tente novamente.")
+                return
 
         
     telefone = input('Digite o telefone do paciente: ').strip()
@@ -111,7 +110,7 @@ def cadastrar():
     dados = carregar_dados()
     # Verifica se o CPF já está cadastrado
     for paciente in dados['pacientes']:
-        if paciente['cpf'] == cpf_validado:
+        if paciente['cpf'] == cpf:
             print('⚠️ Paciente já cadastrado. Tente com outro CPF.')
             return
 
@@ -121,7 +120,7 @@ def cadastrar():
         'nome': nome,
         'genero': genero,
         'data_nascimento': data_formatada,
-        'cpf': cpf_validado,
+        'cpf': cpf,
         'telefone': telefone,
         'email': email,
         'cep': cep_validado,
