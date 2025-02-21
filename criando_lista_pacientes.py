@@ -89,8 +89,11 @@ def cadastrar():
     telefone = input('Digite o telefone do paciente: ').strip()
     cep = input('Digite o CEP do paciente: ').strip()
     cep_validado = validar_cep(cep)
-    email = input('Digite o e-mail do paciente: ').strip()
-    email_validado = validar_email(email)
+    while True:
+        email = input('Digite o e-mail do paciente: ').strip()
+        if validar_email(email):
+            break
+        
     print(convenio)
     convenio = input('Digite qual o convênio do paciente(caso nao possua digitar "nao"): ').strip().upper()
 
