@@ -1,5 +1,5 @@
 import datetime
-from datetime import date, datetime
+import string
 import json
 import os
 from rich.console import Console
@@ -69,6 +69,8 @@ def cadastrar():
     for chave, genero in lista_genero.items():
         console.print(f"[cyan]{chave}[/] - {genero}")
     genero = int(input('Digite o número correspondente ao gênero: '))
+    genero = lista_genero.get(genero, "Não informado")  # Converte o número para o gênero correspondente
+
 
 
     data_nascimento = input('Digite a data de nascimento (DD/MM/AAAA): ').strip()
@@ -137,7 +139,7 @@ def cadastrar():
 # Função para procurar um paciente pelo CPF
 def procurar_paciente():
     dados = carregar_dados()
-    filtro = input('Digite o ID do paciente (apenas números): ').strip()
+    filtro = int(input('Digite o ID do paciente (apenas números): '))
 
     for paciente in dados['pacientes']:
         if paciente['ID_PACIENTE'] == filtro:
@@ -159,89 +161,94 @@ def procurar_paciente():
     console.print("[red]⚠️ Paciente não encontrado.[/]")
 
 
-def listar_pacientes(pacientes):
-    #adicionar print do ID e nome completo dos pacientes ja cadastrados
-    if not pacientes:
-        print('Sem pacientes registrados no sistema.')
-    else:
-        for paciente in pacientes:
-            print(f'ID: {dados['ID_PACIENTE']}\nNome: {dados['nome']}\nTelefone: {dados['telefone']}')
+def listar_pacientes():
+    dados = carregar_dados()
+    if not dados["pacientes"]:
+        console.print("[yellow]Nenhum paciente cadastrado.[/]")
+        return
+    
+    table = Table(title="Lista de Pacientes")
+    table.add_column("ID_PACIENTE", style="cyan")
+    table.add_column("Nome", style="magenta")
+    table.add_column("Telefone", style="green")
+    
+    for paciente in dados["pacientes"]:
+    # Verificar o tipo dos dados
+        print(f"ID_PACIENTE: {type(paciente['ID_PACIENTE'])}, Nome: {type(paciente['nome'])}")
+
+    # Convertendo para string explicitamente
+        table.add_row(str(paciente['ID_PACIENTE']), str(paciente['nome']))
+    
+    console.print(table)
 
 def delet_pacientes():
-    #funcao para deletar pacientes do arquivo json
-    paciente = procurar_paciente()
-    if paciente:
-        dados.remove(paciente)
-        salvar_dados(paciente)
-        print('Paciente removido do sistema.')
+    dados = carregar_dados()
+    cpf = input('Digite o CPF do paciente que deseja remover: ').strip()
 
+    for paciente in dados["pacientes"]:
+        if paciente["cpf"] == cpf:
+            dados["pacientes"].remove(paciente)
+            salvar_dados(dados)
+            console.print("[green]✅ Paciente removido com sucesso![/]")
+            return
+    
+    console.print("[red]⚠️ Paciente não encontrado![/]")
 
 def modificar_dados():
-    paciente = procurar_paciente()
-    if paciente:
-        print('O que gostaria de alterar:\n1 - Nome\n2 - Genero\n3 - Data de nascimento\n4 - CPF\n5 - Telefone\n6 - E-mail\n7 - CEP\n8 - Convenio do paciente')
-        while True:
+    dados = carregar_dados()
+    id_paciente = int(input('Digite o CPF do paciente que deseja modificar: '))
+    
+    for paciente in dados["pacientes"]:
+        if paciente["ID_PACIENTE"] == id_paciente:
+            console.print("1 - Nome\n2 - Telefone\n3 - E-mail\n4 - CEP\n5 - Data de nascimento\n0 - Voltar")
+            
             try:
-                decisao = int(input('- '))
-                break
+                opcao = int(input("Selecione uma opção: "))
             except ValueError:
-                print('Valor inválido, tente novamente.')
+                console.print("[red]⚠️ Entrada inválida.[/]")
                 return
-        if decisao == 1:
-            dados['nome'] = input('Digite o novo nome: ')
-
-
-        elif decisao == 2:
-            while True:
-                try:
-                    for chave, genero in lista_genero.items():
-                        console.print(f"[cyan]{chave}[/] - {genero}")
-
-                    dados['genero'] = int(input('Digite o novo genero a ser adicionado'))
-                    break
-                except ValueError:
-                    print('Valor inválido, tente novamente.')
-                    return
-                
-        elif decisao == 3:
-            while True:
-                try:
-                    dados['data_nascimento'] = input('Digite a nova data de nascimento:').strip()
-                    if validar_data:
+            
+            if opcao == 1:
+                paciente["nome"] = input("Novo nome: ").strip()
+            elif opcao == 2:
+                while True:
+                    telefone = input("Novo telefone: ").strip()
+                    if validar_telefone(telefone):
+                        paciente["telefone"] = telefone
                         break
-                except:
-                    print('Inválido, tente novamente.')
+                    console.print("[red]⚠️ Telefone inválido![/]")
+            elif opcao == 3:
+                email = input("Novo e-mail: ").strip()
+                if validar_email(email):
+                    paciente["email"] = email
+                else:
+                    console.print("[red]⚠️ E-mail inválido![/]")
                     return
-        
-        elif decisao == 4:
-            while True:
-                try:
-                    dados['cpf'] = input('Digite o novo CPF: ')
-                    if validar_cpf_paciente:
+            elif opcao == 4:
+                while True:
+                    cep = input("Novo CEP: ").strip()
+                    if validar_cep(cep):
+                        paciente["cep"] = cep
                         break
-                except ValueError:
-                    print('CPF inválido, tente novamente.')
-                    return
-        elif decisao == 5:
-            while True:
-                try:
-                    dados['telefone'] = input('Digite o novo telefone a ser adicionado: ')
-                    if validar_telefone:
+                    console.print("[red]⚠️ CEP inválido![/]")
+            elif opcao == 5:
+                while True:
+                    data_nascimento = input("Nova data de nascimento (DD/MM/AAAA): ").strip()
+                    if validar_data(data_nascimento):
+                        paciente["data_nascimento"] = data_nascimento
                         break
-                except ValueError:
-                    print('Telefone inválido, tente novamente.')
-        elif decisao == 6:
-            while True:
-                try:
-                    dados['email'] = input('Digite o novo E-mail do paciente: ')
-                    if validar_email:
-                        break
-                except:
-                    print('E-mail inválido, tente novamente')
-                    return
-        elif decisao == 7:
-            while True:
-                
+                    console.print("[red]⚠️ Data inválida![/]")
+            elif opcao == 0:
+                return
+            else:
+                console.print("[red]⚠️ Opção inválida![/]")
+                return
+            
+            salvar_dados(dados)
+            console.print("[green]✅ Dados atualizados com sucesso![/]")
+            return
+    
+    console.print("[red]⚠️ Paciente não encontrado![/]")
 
 
 
@@ -252,27 +259,37 @@ while True:
     console.print("[bold cyan]1[/] - Cadastrar um novo paciente")
     console.print("[bold cyan]2[/] - Listar pacientes já cadastrados")
     console.print("[bold cyan]3[/] - Procurar por um paciente")
+    console.print("[bold cyan]4[/] - Deletar um paciente do sistema")
+    console.print("[bold cyan]5[/] - Modificar dados de um paciente")
     console.print("[bold cyan]0[/] - Sair do sistema")
 
-    opcao = input('Escolha uma opção: ').strip()
-
-    if opcao == '1':
+    opcao = int(input('Escolha uma opção: '))
+    if opcao == 1:
         cadastrar()
-    elif opcao == '2':
+    elif opcao == 2:
         dados = carregar_dados()
-        table = Table(title="📋 Lista de Pacientes", show_header=True, header_style="bold magenta")
+        table = Table(title="\n📋 Lista de Pacientes", show_header=True, header_style="bold magenta")
+        table.add_column("ID_PACIENTE", style="green", justify="left")
         table.add_column("Nome", style="cyan", justify="left")
-        table.add_column("CPF", style="green", justify="left")
-
+        
         for paciente in dados["pacientes"]:
-            table.add_row(paciente['nome'], paciente['cpf'])
-
+            table.add_row(f"{paciente['ID_PACIENTE']}" , f"{paciente['nome']}")
+            
         console.print(table)
-    elif opcao == '3':
+
+    elif opcao == 3:
         procurar_paciente()
-    elif opcao == '0':
+
+    elif opcao == 4:
+        delet_pacientes()  
+
+    elif opcao == 5:
+        modificar_dados()
+
+    elif opcao == 0:
         console.print("[green]Saindo...[/]")
         break
     else:
         console.print("[red]⚠️ Opção inválida. Tente novamente.[/]")
+
 
