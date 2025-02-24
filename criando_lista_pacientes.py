@@ -18,7 +18,7 @@ lista_convenio = {
     'GOLDEN-CROSS' : 0.3,
     'PAX-NACIONAL' : 0.5,
     'HAPVIDA' : 0.2,
-    'nao' : 0
+    'nao' : 0 ,
 }
 
 lista_genero = {
@@ -54,13 +54,10 @@ def salvar_dados(dados):
 
 dados_paciente = carregar_dados()
 
-if dados_paciente and dados_paciente['pacientes']:
-    id_paciente = max(usuario["ID_PACIENTE"] for usuario in dados_paciente['pacientes']) + 1
-else:
-    id_paciente = 1
 
 # Função para cadastrar um novo paciente
 def cadastrar():
+    
     dados = carregar_dados()
     if dados_paciente and dados_paciente['pacientes']:
         id_paciente = max(usuario["ID_PACIENTE"] for usuario in dados_paciente['pacientes']) + 1
@@ -106,7 +103,7 @@ def cadastrar():
         console.print(f"[cyan]{chave}[/]")
 
     convenio = input('Digite o nome do convênio do paciente (caso não possua, digite "nao"): ').strip().upper()
-    convenio = lista_convenio.get(convenio, "Não informado") 
+    desconto = lista_convenio.get(convenio, "Não informado") * 100
 
     dados = carregar_dados()
 
@@ -126,7 +123,8 @@ def cadastrar():
         'telefone': telefone,
         'email': email,
         'cep': cep,
-        'convenio': convenio
+        'convenio': convenio,
+        'desconto' : desconto
     })
 
     salvar_dados(dados)
@@ -150,6 +148,7 @@ def procurar_paciente():
             table.add_row("Email", paciente['email'])
             table.add_row("CEP", paciente['cep'])
             table.add_row("Convênio", paciente['convenio'])
+            table.add_row("Desconto", f"{paciente['desconto']:.2f}%")
             
             console.print(table)
             return

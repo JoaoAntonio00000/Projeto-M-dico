@@ -1,3 +1,27 @@
 {
-    "pacientes": []
+    "pacientes": [
+        {
+            "ID_PACIENTE": 1,
+            "nome": "Ana Barbiero",
+            "genero": "Feminino",
+            "data_nascimento": "10/07/2004",
+            "cpf": "09186947109",
+            "telefone": "(65)99901-7888",
+            "email": "anabarbiero66@gmail.com",
+            "cep": "78057-035",
+            "convenio": 0.5
+        },
+        {
+            "ID_PACIENTE": 2,
+            "nome": "Felipe clink",
+            "genero": "Masculino",
+            "data_nascimento": "28/08/2004",
+            "cpf": "12345678909",
+            "telefone": "(65)99975-7456",
+            "email": "sdfds@gmail.com",
+            "cep": "01001-000",
+            "convenio": "UNIMED",
+            "desconto": 0.5
+        }
+    ]
 }
