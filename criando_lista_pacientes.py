@@ -61,7 +61,11 @@ else:
 
 # Função para cadastrar um novo paciente
 def cadastrar():
-    global id_paciente
+    dados = carregar_dados()
+    if dados_paciente and dados_paciente['pacientes']:
+        id_paciente = max(usuario["ID_PACIENTE"] for usuario in dados_paciente['pacientes']) + 1
+    else:
+        id_paciente = 1
 
     nome = input('Nome completo do paciente: ').strip()
 
@@ -81,25 +85,16 @@ def cadastrar():
 
     while True:
         cpf = input('Digite o CPF do paciente: ').strip()
-        if validar_cpf_paciente:
+        if validar_cpf_paciente(cpf):
             break
-        else:
-            console.print("[red]⚠️ CPF inválido! Tente novamente.[/]")
-            return
     while True:
         telefone = input('Digite o telefone do paciente: ').strip()
-        if validar_telefone:
+        if validar_telefone(telefone):
             break
-        else:
-            console.print("[red]⚠️ Telefone inválido! Tente novamente.[/]")
-            return
     while True:
         cep = input('Digite o CEP do paciente: ').strip()
-        if validar_cep:
+        if validar_cep(cep):
             break
-        else:
-            console.print("[red]⚠️ CEP inválido! Tente novamente.[/]")
-            return
     
     while True:
         email = input('Digite o e-mail do paciente: ').strip()
@@ -111,6 +106,7 @@ def cadastrar():
         console.print(f"[cyan]{chave}[/]")
 
     convenio = input('Digite o nome do convênio do paciente (caso não possua, digite "nao"): ').strip().upper()
+    convenio = lista_convenio.get(convenio, "Não informado") 
 
     dados = carregar_dados()
 
@@ -144,7 +140,7 @@ def procurar_paciente():
     for paciente in dados['pacientes']:
         if paciente['ID_PACIENTE'] == filtro:
             table = Table(title="📋 Paciente Encontrado", show_header=True, header_style="bold magenta")
-            table.add_column("Campo", justify="right", style="cyan", no_wrap=True)
+            table.add_column("Campo", justify="left", style="cyan", no_wrap=True)
             table.add_column("Valor", style="bold green")
             table.add_row("Nome", paciente['nome'])
             table.add_row("Gênero", paciente['genero'])
@@ -183,10 +179,10 @@ def listar_pacientes():
 
 def delet_pacientes():
     dados = carregar_dados()
-    cpf = input('Digite o CPF do paciente que deseja remover: ').strip()
+    id_paciente = int(input('Digite o ID do paciente que deseja remover: '))
 
     for paciente in dados["pacientes"]:
-        if paciente["cpf"] == cpf:
+        if paciente["ID_PACIENTE"] == id_paciente:
             dados["pacientes"].remove(paciente)
             salvar_dados(dados)
             console.print("[green]✅ Paciente removido com sucesso![/]")
@@ -269,7 +265,7 @@ while True:
     elif opcao == 2:
         dados = carregar_dados()
         table = Table(title="\n📋 Lista de Pacientes", show_header=True, header_style="bold magenta")
-        table.add_column("ID_PACIENTE", style="green", justify="left")
+        table.add_column("ID_PACIENTE", style="green", justify="center")
         table.add_column("Nome", style="cyan", justify="left")
         
         for paciente in dados["pacientes"]:

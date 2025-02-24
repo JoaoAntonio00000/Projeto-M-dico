@@ -1,15 +1,3 @@
 {
-    "pacientes": [
-        {
-            "ID_PACIENTE": 1,
-            "nome": "Ana Barbiero",
-            "genero": "Feminino",
-            "data_nascimento": "10/07/2004",
-            "cpf": "09186947109",
-            "telefone": "(65)99901-7888",
-            "email": "anabarbiero66@gmail.com",
-            "cep": "78057-035",
-            "convenio": "HAPVIDA"
-        }
-    ]
+    "pacientes": []
 }
