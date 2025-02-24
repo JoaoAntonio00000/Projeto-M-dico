@@ -58,9 +58,10 @@ dados_paciente = carregar_dados()
 # Função para cadastrar um novo paciente
 def cadastrar():
     
-    dados = carregar_dados()
-    if dados_paciente and dados_paciente['pacientes']:
-        id_paciente = max(usuario["ID_PACIENTE"] for usuario in dados_paciente['pacientes']) + 1
+    dados = carregar_dados()  # Sempre carregar os dados mais recentes
+
+    if dados["pacientes"]:
+        id_paciente = max(paciente["ID_PACIENTE"] for paciente in dados["pacientes"]) + 1
     else:
         id_paciente = 1
 
@@ -130,7 +131,7 @@ def cadastrar():
     salvar_dados(dados)
     console.print("[green]✅ Paciente cadastrado com sucesso.[/]")
 
-# Função para procurar um paciente pelo CPF
+# Função para procurar um paciente pelo ID
 def procurar_paciente():
     dados = carregar_dados()
     filtro = int(input('Digite o ID do paciente (apenas números): '))
@@ -168,7 +169,7 @@ def listar_pacientes():
     table.add_column("Telefone", style="green")
     
     for paciente in dados["pacientes"]:
-    # Verificar o tipo dos dados
+    # Verificar o tipo dos dados - eu te odeio rich por n saber versionar numero
         print(f"ID_PACIENTE: {type(paciente['ID_PACIENTE'])}, Nome: {type(paciente['nome'])}")
 
     # Convertendo para string explicitamente

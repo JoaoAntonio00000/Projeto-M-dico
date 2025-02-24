@@ -1,27 +1,28 @@
 {
     "pacientes": [
         {
-            "ID_PACIENTE": 1,
+            "ID_PACIENTE": 2,
             "nome": "Ana Barbiero",
             "genero": "Feminino",
             "data_nascimento": "10/07/2004",
             "cpf": "09186947109",
             "telefone": "(65)99901-7888",
             "email": "anabarbiero66@gmail.com",
-            "cep": "78057-035",
-            "convenio": 0.5
+            "cep": "75057-035",
+            "convenio": "PAX-NACIONAL",
+            "desconto": 50.0
         },
         {
-            "ID_PACIENTE": 2,
-            "nome": "Felipe clink",
+            "ID_PACIENTE": 3,
+            "nome": "Felipe Clink",
             "genero": "Masculino",
             "data_nascimento": "28/08/2004",
-            "cpf": "12345678909",
-            "telefone": "(65)99975-7456",
-            "email": "sdfds@gmail.com",
-            "cep": "01001-000",
+            "cpf": "01673446175",
+            "telefone": "(65)99903-8976",
+            "email": "felipe@gmail.com",
+            "cep": "78054-023",
             "convenio": "UNIMED",
-            "desconto": 0.5
+            "desconto": 50.0
         }
     ]
 }
