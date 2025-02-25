@@ -13,6 +13,7 @@ def menu():
                               '\n[5] - Excluir Secretaria'
                               '\n[6] - Atualizar Secretaria'
                               '\n[7] - Adicionar Secretaria'
+                              '\n[8] - Exibir lista de Secretarias'
                               '\n[0] - Sair\n'
                               "[bold cyan]Escolha uma opção: [/bold cyan]")
         if opcao == '1':
