@@ -3,10 +3,19 @@ Essa agenda fica no json
 so faz a questao de adicionar e modificar ela no terminal , e pensar ja como integrar pelo telegram
 
 cada vez que acessar a agenda ja faz uma limpa nela e adicona no log os que ja foram
+
+print agenda diaria
+
+cancelar
+
+mudar horario
+
+email do paciente na agenda e verificar se cadastro existe
 '''
 import json
 from datetime import date as dt
 from datetime import timedelta,datetime
+from criando_lista_pacientes import cadastrar
 
 
 def obter_semana(data_str):
@@ -72,10 +81,23 @@ def agendamento():
     try:
         #parte 1 - Paciente já cadastrado, se nao estiver por favor vá para o cadastramento pelo terminal
         id_paciente = int(input("Digite o id do paciente: "))
+        #verificação de id
+        with open('pacientes.json','r') as arquivo:
+            file = json.load(arquivo)
+            paciente_existe = False
+            for i in range (len(file['pacientes'])):
+                if file["pacientes"][i]['ID_PACIENTE'] == id_paciente:
+                    paciente_existe = True
+                    j = i
+            if paciente_existe:
+                email = file["pacientes"][int(j)]['email'] 
+            else:
+                print('ID não encontrado, por favor faça o cadastramento!\nRedirecionando!')
+                cadastrar()
 
         #parte 2 - tipo de consulta
         tipo_consulta = input('Digite o tipo de consulta: ')
-        #parte 2 - escolher medico
+        #parte 3 - escolher medico
         with open('lista_medicos.json', 'r') as arquivo:
             file = json.load(arquivo)
             for i in file:
@@ -85,7 +107,7 @@ def agendamento():
                 if id_medico == i['ID']:
                     medico = i['Nome']
 
-        #parte 3 - escolher dia
+        #parte 4 - escolher dia
         data_atual = dt.today()
         ultimo_dia_mes = (data_atual.replace(day=28) + timedelta(days=4)).replace(day=1) - timedelta(days=1)
         dias = ["segunda", "terca", "quarta", "quinta", "sexta", "sábado", "domingo"]
@@ -110,7 +132,7 @@ def agendamento():
                 data_atual = (data_atual.replace(day=28) + timedelta(days=4)).replace(day=1)
                 ultimo_dia_mes = (data_atual.replace(day=28) + timedelta(days=4)).replace(day=1) - timedelta(days=1)
 
-        #parte 4 - escolher horario, disponiveis do dia do medico
+        #parte 5 - escolher horario, disponiveis do dia do medico
         try:
             with open ("agenda.json",'r') as arquivo:
                 file = json.load(arquivo)
@@ -150,6 +172,7 @@ def agendamento():
                     "id_medico": id_medico,
                     "tipo_de_consulta": tipo_consulta,
                     "id_paciente": id_paciente,
+                    "email_paciente": email,
                 }
         try:
             with open("agenda.json", "r") as arquivo:
