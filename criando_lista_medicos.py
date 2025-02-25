@@ -221,5 +221,3 @@ def menu():
         else:
             console.print("[bold red]Valor inválido![/bold red]")
 
-if __name__ == '__main__':
-    menu()

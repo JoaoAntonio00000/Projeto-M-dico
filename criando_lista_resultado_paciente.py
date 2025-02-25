@@ -31,8 +31,7 @@ def verificar_se_arquivo_existe():
         with open(caminho_arquivo, 'w', encoding='utf-8') as arquivo:
             json.dump([], arquivo, indent=4, ensure_ascii=False)
         console.print("[bold green]Arquivo criado com sucesso![/bold green]")
-    else:
-        console.print("[bold green]Arquivo já existe.[/bold green]")
+
 
 verificar_se_arquivo_existe()
 
@@ -257,6 +256,3 @@ def menu():
             break
         else:
             console.print("[bold red]Valor inválido![/bold red]")
-
-if __name__ == '__main__':
-    menu()

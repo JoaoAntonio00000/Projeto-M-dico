@@ -227,6 +227,4 @@ def menu():
             break
         else:
             console.print("[bold red]Opção inválida. Tente novamente.[/bold red]")
-
-# Executar o menu
 menu()

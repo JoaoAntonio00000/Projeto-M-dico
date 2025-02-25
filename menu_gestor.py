@@ -1,5 +1,5 @@
 from criando_lista_medicos import adicionar_medico, exibir_lista_medico, excluir_medico, atualizar_contato
-from criando_lista_secretaria import adicionar_secretaria, exibir_lista_secretarias,excluir_secretaria,atualizar_secretaria
+from criando_lista_secretaria import adicionar_secretaria, exibir_lista_secretaria,excluir_secretaria,atualizar_secretaria
 
 from rich.console import Console
 console = Console()
@@ -26,14 +26,14 @@ def menu():
         elif opcao == '4':
             atualizar_contato()
         elif opcao =='5':
-            exibir_lista_secretarias()
+            exibir_lista_secretaria()
             excluir_secretaria()
         elif opcao == '6':
             atualizar_secretaria()
         elif opcao == '7':
             adicionar_secretaria()
         elif opcao == '8':
-            exibir_lista_secretarias()
+            exibir_lista_secretaria()
         elif opcao == '0':
             console.print("[bold cyan]Até mais![/bold cyan]")
             break
