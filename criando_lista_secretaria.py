@@ -54,7 +54,8 @@ def adicionar_secretaria():
             cpf = console.input("[bold yellow]Informe o CPF da Secretária: [/bold yellow]").strip()
             if validar_cpf_secretaria(cpf):
                 break
-    
+            else:
+                console.print("[bold red]CPF inválido ou já cadastrado. Tente novamente.[/bold red]")
         
         while True:
             data_nascimento = console.input("[bold yellow]Digite a data de nascimento (DD/MM/AAAA): [/bold yellow]").strip()
@@ -67,18 +68,20 @@ def adicionar_secretaria():
             email = console.input("[bold yellow]Informe o e-mail da Secretária: [/bold yellow]").strip()
             if validar_email(email):
                 break
-            
+            else:
+                console.print("[bold red]E-mail inválido! Digite novamente.[/bold red]")
         
         while True:
             genero = console.input("[bold yellow]Informe o gênero da Secretária (M/F): [/bold yellow]").strip().upper()
             if genero in ["M", "F"]:
                 break
-           
+            else:
+                console.print("[bold red]Gênero inválido! Use 'M' para masculino ou 'F' para feminino.[/bold red]")
         
         novo_usuario = {
             "ID": secretaria_id,
             "Nome": nome,
-            "Data de Nascimento": data_nascimento,
+            "Data de Nascimento": data_nascimento,  # Chave corrigida
             "E-mail": email,
             "CPF": cpf,
             "Genero": genero
@@ -170,7 +173,7 @@ def exibir_lista_secretaria():
     tabela.add_column("ID", justify="center", style="bold cyan")
     tabela.add_column("Nome", justify="left", style="bold yellow")
     tabela.add_column("E-mail", justify="left", style="bold green")
-    tabela.add_column("Data de Nascimento", justify="left", style="bold green")
+    tabela.add_column("Data de Nascimento", justify="left", style="bold green")  # Chave corrigida
     tabela.add_column("Gênero", justify="left", style="bold green")
     tabela.add_column("CPF", justify="left", style="bold magenta")
 
@@ -179,7 +182,7 @@ def exibir_lista_secretaria():
             str(usuario["ID"]),
             usuario["Nome"],
             usuario["E-mail"],
-            usuario['Data de Nascimento'],
+            usuario["Data de Nascimento"],  # Chave corrigida
             usuario['Genero'],
             usuario['CPF']
         )
