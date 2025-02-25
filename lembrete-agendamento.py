@@ -12,6 +12,7 @@ from email.message import EmailMessage
 from dotenv import load_dotenv
 import os
 
+
 load_dotenv()
 
 email_gerenciador = os.getenv('EMAIL_REMETENTE')
@@ -20,19 +21,39 @@ password = os.getenv('PASSWORD')
 
 
 def salvar_dados():
-    with open('emails_paciente_lembrete', 'w', encoding= 'utf-8') as arquivo:
+
+    with open('pacientes.json', 'r', encoding= 'utf-8') as arquivo_paciente:
+        pacientes = json.load(arquivo_paciente)
+
+    # Abrindo o arquivo original e carregando os dados
+    with open('agenda.json', 'r', encoding='utf-8') as arquivo_agenda:
+        agendamentos = json.load(arquivo_agenda)  # Carrega os dados do JSON
+
+    lembrete= []
+    # Salvando em um novo arqui vo JSON
+
+    for consulta in agendamentos:
+        email = consulta.get('email')
+        hora = consulta.get('hora')
+        data = consulta.get('data')
         
 
+    with open('emails_paciente_lembrete.json', 'w', encoding='utf-8') as arquivo:
+        json.dump(lembrete, arquivo, ensure_ascii=False, indent=4)
 
-def ler_agendamentos(destinatario, mensagem): 
-    with open('agenda.json', 'r', encoding= 'utf-8') as arquivo:
-        dados = json.load(arquivo)
-    email = dados.get('email')
-    hora = dados.get('hora')
-    data = dados.get('dia')
+    print("Arquivo 'emails_paciente_lembrete.json' salvo com sucesso!")
+
+# Executando a função
+salvar_dados()
 
 
 def enviar_lembrete():
+
+
+
+
+
+
     msg = EmailMessage()
     msg['Subject'] = 'Lembrete de consulta agendada'
     msg['From'] = email_gerenciador
