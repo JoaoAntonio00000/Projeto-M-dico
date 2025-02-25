@@ -15,6 +15,16 @@ def carregar_dados():
 
 dados_medico = carregar_dados()
 
+def carregar_dados_secretaria():
+    caminho_secretaria = "lista_secretaria.json"
+    try:
+        with open(caminho_secretaria, "r", encoding="utf-8") as arquivo:
+            return json.load(arquivo)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
+
+dados_secretaria = carregar_dados_secretaria()  # Corrigido para carregar dados da secretaria
+
 # Validar se o horário está correto
 def validar_horario(horario):
     try:
@@ -51,7 +61,7 @@ def validar_crm(crm):
     
     return True
 
-# Validar se o CPF já existe e se é válido
+# Validar se o CPF já existe e se é válido (para médicos)
 def validar_cpf(cpf):
     cpf = cpf.replace("-", '').replace(".", '')
     if not cpf:
@@ -80,6 +90,7 @@ def validar_cpf(cpf):
     
     return True
 
+# Validar CPF para pacientes
 def validar_cpf_paciente(cpf):
     cpf = cpf.replace("-", '').replace(".", '')
     if not cpf:
@@ -103,12 +114,39 @@ def validar_cpf_paciente(cpf):
         console.print("[bold red]CPF inválido.")
         return False  # Retorna False se os dígitos verificadores não coincidirem.
     
-    return True  # Retorna True se o CPF for válido (você pode remover esse retorno se não quiser retornar nada)
+    return True  # Retorna True se o CPF for válido
 
+# Validar CPF para secretárias
+def validar_cpf_secretaria(cpf):
+    cpf = cpf.replace("-", '').replace(".", '')
+    if not cpf:
+        console.print("[bold red]O CPF é obrigatório.")
+        return False   
+    if len(cpf) != 11 or cpf == cpf[0] * 11:
+        console.print("[bold red]CPF inválido.")
+        return False
     
+    soma_1 = sum(int(cpf[i]) * (10 - i) for i in range(9))
+    resto_1 = soma_1 % 11
+    digito_1 = 0 if resto_1 < 2 else 11 - resto_1
+    
+    soma_2 = sum(int(cpf[i]) * (11 - i) for i in range(10))
+    resto_2 = soma_2 % 11
+    digito_2 = 0 if resto_2 < 2 else 11 - resto_2
+    
+    if cpf[-2:] != f"{digito_1}{digito_2}":
+        console.print("[bold red]CPF inválido.")
+        return False
+    
+    # Verifica se o CPF já está cadastrado na lista de secretárias
+    for usuario in dados_secretaria:
+        if usuario["CPF"] == cpf:
+            console.print("[bold red]CPF já cadastrado.")
+            return False
+    
+    return True
 
-
-
+# Validar data de nascimento
 def validar_data(data_nascimento):
     # Expressão regular para garantir que a data siga o formato DD/MM/AAAA
     padrao = r'^\d{2}/\d{2}/\d{4}$'
@@ -126,8 +164,7 @@ def validar_data(data_nascimento):
         # Se a data não segue o formato esperado, retorna False
         return False
 
-
-
+# Validar telefone
 def validar_telefone(telefone):
     # Expressão regular para validar o formato (00)00000-0000
     padrao = r'^\(\d{2}\)\d{5}-\d{4}$'
@@ -135,14 +172,33 @@ def validar_telefone(telefone):
     if re.match(padrao, telefone):
         return telefone  
     else:
-        print("⚠️ Telefone inválido! O formato correto é (00)00000-0000 (coloque o DDD).")
+        console.print("⚠️ Telefone inválido! O formato correto é (00)00000-0000 (coloque o DDD).")
         return False
 
+# Validar CEP
 def validar_cep(cep):
-
     padrao_cep = r'^\d{5}-\d{3}$'
-
     if re.match(padrao_cep, cep):
         return True
     else:
         return False
+
+# Validar força da senha
+def validar_forca_senha(senha):
+    if len(senha) < 8:
+        console.print("A senha deve ter pelo menos 8 caracteres.", style='error')
+        return False
+    if not re.search(r'\d', senha):
+        console.print("A senha deve conter pelo menos um número.", style='error')
+        return False
+    if not re.search(r'[a-z]', senha):
+        console.print("A senha deve conter pelo menos uma letra minúscula.", style='error')
+        return False
+    if not re.search(r'[A-Z]', senha):
+        console.print("A senha deve conter pelo menos uma letra maiúscula.", style='error')
+        return False
+    if not re.search(r'[^a-zA-Z0-9\s]', senha):
+        console.print("A senha deve conter pelo menos um caractere especial.", style='error')
+        return False
+    console.print("Senha adicionada com sucesso!", style='certo')
+    return True

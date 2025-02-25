@@ -191,7 +191,7 @@ def exibir_lista_medico():
             usuario["E-mail"],
             ", ".join(usuario['Convenio']),
             usuario['Genero'],
-            usuario['Especialização'],
+            usuario['Especializacao'],
             usuario['CRM'],
             usuario['CPF']
         )
