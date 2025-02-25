@@ -90,7 +90,7 @@ def agendamento():
                     paciente_existe = True
                     j = i
             if paciente_existe:
-                email = file[["pacientes"][j]['email']]  
+                email = file["pacientes"][int(j)]['email'] 
             else:
                 print('ID não encontrado, por favor faça o cadastramento!\nRedirecionando!')
                 cadastrar()
