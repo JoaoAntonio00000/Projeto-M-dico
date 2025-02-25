@@ -1,24 +1,5 @@
 {
-    "segunda": [
-        {
-            "dia": "2025-02-24",
-            "hora": "10:00",
-            "confirmacao_paciente": "pendente",
-            "medico": "Joao",
-            "id_medico": 2,
-            "tipo_de_consulta": "Retorno",
-            "id_paciente": 1
-        },
-        {
-            "dia": "2025-02-24",
-            "hora": "11:00",
-            "confirmacao_paciente": "pendente",
-            "medico": "Joao",
-            "id_medico": 2,
-            "tipo_de_consulta": "1",
-            "id_paciente": 3
-        }
-    ],
+    "segunda": [],
     "terca": [],
     "quarta": [],
     "quinta": [],
