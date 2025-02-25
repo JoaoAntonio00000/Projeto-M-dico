@@ -75,9 +75,9 @@ async def marcar_consulta(update: Update, context: CallbackContext):
 
     keyboard = [
         [InlineKeyboardButton("08:00", callback_data="horario_08"),
-         InlineKeyboardButton("09:00", callback_data="horario_09")],
+        InlineKeyboardButton("09:00", callback_data="horario_09")],
         [InlineKeyboardButton("10:00", callback_data="horario_10"),
-         InlineKeyboardButton("11:00", callback_data="horario_11")]
+        InlineKeyboardButton("11:00", callback_data="horario_11")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
@@ -113,9 +113,9 @@ async def botao_clicado(update: Update, context: CallbackContext):
     # Criação dos botões de horário após a escolha do dia
     keyboard = [
         [InlineKeyboardButton("08:00", callback_data="horario_08"),
-         InlineKeyboardButton("09:00", callback_data="horario_09")],
+        InlineKeyboardButton("09:00", callback_data="horario_09")],
         [InlineKeyboardButton("10:00", callback_data="horario_10"),
-         InlineKeyboardButton("11:00", callback_data="horario_11")]
+        InlineKeyboardButton("11:00", callback_data="horario_11")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
@@ -141,7 +141,7 @@ def main():
     # Registra os handlers
     application.add_handler(CommandHandler("marcar_consulta", marcar_consulta))
     application.add_handler(CallbackQueryHandler(button_callback, pattern="^data_"))
-    application.add_handler(CallbackQueryHandler(horario_callback, pattern=
+    application.add_handler(CallbackQueryHandler(horario_callback, pattern= "horario" )
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("consulta", marcar_consulta))
     application.add_handler(CommandHandler("help", help))
