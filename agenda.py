@@ -1,44 +1,8 @@
 '''
-Exemplo dicionario agenda:
-Agenda{
-    dia, 
-    hora,
-    confirmacao_paciente,
-    medico,
-    tipo_consulta,
-    ID_paciente,
-    nome_paciente,
-}
-
-
-Agenda {
-    segunda[
-        {dia, 
-        hora,
-        confirmacao_paciente, pendente confirmado cancelado, se cancelado deixar so o log
-        medico,
-        tipo_consulta,
-        ID_paciente,
-        }
-    ]
-}
-
-pegar os dias se ja tiver passado tipo de segunda já puxa segunda da semana que vem , e de somente de semana que vem 
- 
-
 Essa agenda fica no json
 so faz a questao de adicionar e modificar ela no terminal , e pensar ja como integrar pelo telegram
 
 cada vez que acessar a agenda ja faz uma limpa nela e adicona no log os que ja foram
-
-with open ('agenda.json','r') as arquivo:
-    agenda = json.load(arquivo)
-    # Ordenar a lista de dicionários dentro da chave "segunda"
-    agenda["segunda"] = sorted(agenda["segunda"], key=lambda x: (x["dia"], x["hora"]))
-
-    # Exibir a agenda ordenada
-    for entrada in agenda["segunda"]:
-        print(entrada)
 '''
 import json
 from datetime import date as dt
