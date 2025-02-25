@@ -5,6 +5,11 @@ import string
 from rich.console import Console
 from validacao_de_dados import validar_crm, validar_forca_senha, validar_cpf, validar_email, validar_telefone, validar_cep, validar_data
 
+# Importando os menus correspondentes
+from menu_gestor import menu as menu_gestor
+from menu_secretaria import menu as menu_secretaria
+from menu_medico import menu_medico
+
 console = Console()
 
 # Caminhos dos arquivos JSON para cada tipo de usuário
@@ -209,7 +214,14 @@ def menu():
             usuario_logado = fazer_login()
             if usuario_logado:
                 console.print(f"[bold]Você está logado como: {usuario_logado['nome']}[/bold]")
-                # Aqui você pode adicionar funcionalidades para o usuário logado
+                
+                # Redirecionar para o menu correto com base no tipo de usuário
+                if usuario_logado["tipo"] == "gestor":
+                    menu_gestor()
+                elif usuario_logado["tipo"] == "secretária":
+                    menu_secretaria()
+                elif usuario_logado["tipo"] == "médico":
+                    menu_medico(usuario_logado["ID_login"])  # Passando o ID do médico
         elif opcao == "3":
             console.print("[bold blue]Saindo...[/bold blue]")
             break
