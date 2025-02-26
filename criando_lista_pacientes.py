@@ -249,7 +249,7 @@ def modificar_dados():
 
 
 
-# Menu para rodar no terminal
+'''# Menu para rodar no terminal
 while True:
     console.print("\n[bold yellow]📌 Menu Principal[/]")
     console.print("[bold cyan]1[/] - Cadastrar um novo paciente")
@@ -289,3 +289,4 @@ while True:
         console.print("[red]⚠️ Opção inválida. Tente novamente.[/]")
 
 
+'''

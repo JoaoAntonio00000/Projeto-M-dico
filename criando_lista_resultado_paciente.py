@@ -235,7 +235,7 @@ def exibir_resultado_paciente():
         console.print(f"Médico Responsável: {resultado['Nome_Medico']}")
         console.print("-" * 40)  # Linha separadora
 
-def menu():
+'''def menu():
     while True:
         opcao = console.input("[bold magenta][1]-Adicionar Exame e Resultado"
                               '\n[2] - Atualizar Resultado do Exame'
@@ -256,3 +256,4 @@ def menu():
             break
         else:
             console.print("[bold red]Valor inválido![/bold red]")
+'''

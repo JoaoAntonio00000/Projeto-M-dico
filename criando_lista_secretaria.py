@@ -189,7 +189,7 @@ def exibir_lista_secretaria():
 
     console.print(tabela)
 
-# Menu principal
+'''# Menu principal
 def menu():
     while True:
         opcao = console.input("[bold magenta][1]-Adicionar Secretária"
@@ -212,3 +212,4 @@ def menu():
             break
         else:
             console.print("[bold red]Valor inválido![/bold red]")
+'''

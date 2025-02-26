@@ -61,7 +61,7 @@ def cadastrar_login():
     console.print("[bold cyan]Cadastro de Novo login[/bold cyan]")
     
     # Solicitar o tipo de usuário
-    tipo = input("Digite o tipo de usuário (Gestor/Médico/Secretária): ").strip().lower()
+    tipo = console.input("Digite o tipo de usuário (Gestor/Médico/Secretária): ").strip().lower()
     
     if tipo not in ["gestor", "médico", "secretária"]:
         console.print("[bold red]Tipo de usuário inválido. Tente novamente.[/bold red]")
@@ -79,35 +79,35 @@ def cadastrar_login():
     novo_id = gerar_novo_id(dados_login)
     
     # Solicitar os dados do login
-    nome = input("[bold yellow]Digite o seu nome: ")
-    genero = input("[bold yellow]Digite o seu gênero (Masculino/Feminino/Outro): ")
-    data_nascimento = input("[bold yellow]Digite a sua data de nascimento (DD/MM/AAAA): ")
+    nome = console.input("[bold yellow]Digite o seu nome: ")
+    genero = console.input("[bold yellow]Digite o seu gênero (Masculino/Feminino/Outro): ")
+    data_nascimento = console.input("[bold yellow]Digite a sua data de nascimento (DD/MM/AAAA): ")
     while True:
         if validar_data(data_nascimento):
             console.print("[bold red]Data de nascimento inválida. Tente novamente.[/bold red]")
             break
     while True:
-        cpf = input("[bold yellow]Digite o seu CPF: ")
+        cpf = console.input("[bold yellow]Digite o seu CPF: ")
         if validar_cpf(cpf):
             console.print("[bold red]CPF inválido ou já cadastrado. Tente novamente.[/bold red]")
             break
     while True:    
-        telefone = input("[bold yellow]Digite o seu telefone: ")
+        telefone = console.input("[bold yellow]Digite o seu telefone: ")
         if validar_telefone(telefone):
             console.print("[bold red]Telefone inválido. Tente novamente.[/bold red]")
             break
     while True:    
-        email = input("[bold yellow]Digite o seu email: ")
+        email = console.input("[bold yellow]Digite o seu email: ")
         if validar_email(email):
             console.print("[bold red]E-mail inválido ou já cadastrado. Tente novamente.[/bold red]")
             break
     while True: 
-        cep = input("[bold yellow]Digite o seu CEP: ")
+        cep = console.input("[bold yellow]Digite o seu CEP: ")
         if validar_cep(cep):
             console.print("[bold red]CEP inválido. Tente novamente.[/bold red]")
             break
     while True:
-        senha = input("[bold yellow]Digite a sua senha: ")
+        senha = console.input("[bold yellow]Digite a sua senha: ")
         if validar_forca_senha(senha):
             console.print("[bold red]Senha não atende aos requisitos de segurança. Tente novamente.[/bold red]")
             break
@@ -137,7 +137,7 @@ def cadastrar_login():
         novo_login["codigo_gestor"] = gerar_codigo_gestor()
     elif tipo == "médico":
         while True:
-            crm = input("[bold yellow]Digite o seu CRM: ")
+            crm = console.input("[bold yellow]Digite o seu CRM: ")
             if validar_crm(crm):
                 console.print("[bold red]CRM inválido ou já cadastrado. Tente novamente.[/bold red]")
                 break
@@ -161,7 +161,7 @@ def fazer_login():
     console.print("[bold cyan]Faça seu login[/bold cyan]")
     
     # Solicitar o tipo de usuário
-    tipo = input("[bold yellow]Digite o tipo de usuário (Gestor/Médico/Secretária): ").strip().lower()
+    tipo = console.input("[bold yellow]Digite o tipo de usuário (Gestor/Médico/Secretária): ").strip().lower()
     
     if tipo not in ["gestor", "médico", "secretária"]:
         console.print("[bold red]Tipo de usuário inválido. Tente novamente.[/bold red]")
@@ -170,15 +170,15 @@ def fazer_login():
     # Carregar os dados existentes
     if tipo == "gestor":
         dados_login = carregar_dados_login(caminho_login_gestor)
-        identificador = input("[bold yellow]Digite seu código de gestor: ")
+        identificador = console.input("[bold yellow]Digite seu código de gestor: ")
     elif tipo == "médico":
         dados_login = carregar_dados_login(caminho_login_medico)
-        identificador = input("[bold yellow]Digite seu CRM: ")
+        identificador = console.input("[bold yellow]Digite seu CRM: ")
     else:
         dados_login = carregar_dados_login(caminho_login_secretaria)
-        identificador = input("[bold yellow]Digite seu email ou CPF: ")
+        identificador = console.input("[bold yellow]Digite seu email ou CPF: ")
     
-    senha = input("[bold yellow]Digite sua senha: ")
+    senha = console.input("[bold yellow]Digite sua senha: ")
     
     # Verificar se o login existe
     for login in dados_login:
@@ -199,18 +199,16 @@ def fazer_login():
     console.print("[bold red]Identificador ou senha incorretos. Tente novamente.[/bold red]")
     return None
 
-# Menu principal
-def menu():
+# Função principal que inicia o login e redireciona para o menu correto
+def main():
     while True:
-        console.print("\n[bold blue]MENU PRINCIPAL[/bold blue]")
-        console.print("[bold yellow]1. Cadastrar novo login")
-        console.print("[bold yellow]2. Fazer login")
+        console.print("\n[bold blue]SISTEMA DE LOGIN[/bold blue]")
+        console.print("[bold yellow]1. Fazer login")
+        console.print("[bold yellow]2. Cadastrar novo login")
         console.print("[bold red]3. Sair")
-        opcao = input("Escolha uma opção: ")
+        opcao = console.input("Escolha uma opção: ")
         
         if opcao == "1":
-            cadastrar_login()
-        elif opcao == "2":
             usuario_logado = fazer_login()
             if usuario_logado:
                 console.print(f"[bold]Você está logado como: {usuario_logado['nome']}[/bold]")
@@ -222,9 +220,14 @@ def menu():
                     menu_secretaria()
                 elif usuario_logado["tipo"] == "médico":
                     menu_medico(usuario_logado["ID_login"])  # Passando o ID do médico
+        elif opcao == "2":
+            cadastrar_login()
         elif opcao == "3":
             console.print("[bold blue]Saindo...[/bold blue]")
             break
         else:
             console.print("[bold red]Opção inválida. Tente novamente.[/bold red]")
-menu()
+
+# Iniciar o programa
+if __name__ == "__main__":
+    main()

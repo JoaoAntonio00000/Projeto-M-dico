@@ -198,7 +198,7 @@ def exibir_lista_medico():
 
     console.print(tabela)
 
-def menu():
+'''def menu():
     while True:
         opcao = console.input("[bold magenta][1]-Adicionar médico"
                               '\n[2] - Ver lista de médicos'
@@ -221,3 +221,4 @@ def menu():
         else:
             console.print("[bold red]Valor inválido![/bold red]")
 
+'''
