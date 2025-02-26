@@ -102,7 +102,7 @@ def agendamento():
         with open('lista_medicos.json', 'r') as arquivo:
             file = json.load(arquivo)
             for i in file:
-                console.print(f'[bold cyan]ID:{i['ID']} - Dr(a) {i['Nome']} - {i["especializacao"]}')
+                console.print(f'[bold cyan]ID:{i['ID']} - Dr(a) {i['Nome']} - {i["Especializacao"]}')
             id_medico = int(console.input('[bold cyan]Digite o ID do médico que deseja marcar a consulta: '))
             for i in file:
                 if id_medico == i['ID']:
