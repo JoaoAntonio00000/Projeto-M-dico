@@ -38,13 +38,6 @@ def nome_lembrete(email_pacient):
     return next((p['nome'] for p in pacientes if p['email'] == email_pacient), "Paciente sem identificação")
 
 
-def 
-
-
-
-
-
-
 def enviar_email_confirmacao(destinatario, nome_paciente, data_consulta, hora_consulta):
     msg = EmailMessage()
     msg['Subject'] = '📅 Lembrete de Consulta'
