@@ -2,6 +2,7 @@ import json
 import os
 from rich.console import Console
 from validacao_de_dados import validar_email, validar_crm, validar_cpf
+
 console = Console()
 
 caminho_arquivo = "lista_medicos.json"
@@ -12,8 +13,6 @@ def verificar_se_arquivo_existe():
         with open(caminho_arquivo, 'w', encoding='utf-8') as arquivo:
             json.dump([], arquivo, indent=4, ensure_ascii=False)
         console.print("[bold green]Arquivo criado com sucesso![/bold green]")
-    else:
-        console.print("[bold green]Arquivo já existe.[/bold green]")
 
 verificar_se_arquivo_existe()
 
@@ -51,29 +50,36 @@ def adicionar_medico():
         
         while True:
             cpf = console.input("[bold yellow]Informe o CPF do Médico: ").strip()
-            if validar_cpf(cpf):
-                break
-
+            if not validar_cpf(cpf):
+                # Verificar se o CPF já existe
+                if any(medico["CPF"] == cpf for medico in dados_medico):
+                    console.print("[bold red]CPF já cadastrado![/bold red]")
+                else:
+                    break
+            else:
+                console.print("[bold red]CPF inválido! Digite novamente.[/bold red]")
 
         while True:
             email = console.input("[bold yellow]Informe o email do Médico: [/bold yellow]").strip()
-            if validar_email(email):
+            if not validar_email(email):
                 break
             else:
                 console.print("[bold red]E-mail inválido! Digite novamente.[/bold red]")
         
         while True:
             crm = console.input("[bold yellow]Informe o CRM do médico: (****/Sigla do Estado)[/bold yellow]").strip()
-            if validar_crm(crm):
-                break
+            if not validar_crm(crm):
+                # Verificar se o CRM já existe
+                if any(medico["CRM"] == crm for medico in dados_medico):
+                    console.print("[bold red]CRM já cadastrado![/bold red]")
+                else:
+                    break
             else:
                 console.print("[bold red]CRM inválido! Por favor, tente novamente.[/bold red]")
         
         tipo_de_convenio = console.input("[bold yellow]O médico atende convênio? (s/n): [/bold yellow]").strip().upper()
         if tipo_de_convenio == "S":
             convenio = console.input("[bold blue]Informe quais convênios o médico atende (separados por vírgula): [/bold blue]").strip().split(",")
-        elif tipo_de_convenio =='N':
-            convenio = ['Nenhum']
         else:
             convenio = ['Nenhum']
         
@@ -90,7 +96,7 @@ def adicionar_medico():
             "ID": medico_id,
             "Nome": nome,
             "E-mail": email,
-            "CPF":cpf,
+            "CPF": cpf,
             "CRM": crm,
             "Genero": genero,
             "Especializacao": especializacao,
@@ -183,7 +189,7 @@ def exibir_lista_medico():
     tabela.add_column("Genero", justify="left", style="bold green")
     tabela.add_column("Especialização", justify="left", style="bold green")
     tabela.add_column("CRM", justify="left", style="bold blue")
-    tabela.add_column("CPF",justify='left',style='bold magenta')
+    tabela.add_column("CPF", justify='left', style='bold magenta')
     for usuario in dados_medico:
         tabela.add_row(
             str(usuario["ID"]),
@@ -198,7 +204,7 @@ def exibir_lista_medico():
 
     console.print(tabela)
 
-'''def menu():
+def menu():
     while True:
         opcao = console.input("[bold magenta][1]-Adicionar médico"
                               '\n[2] - Ver lista de médicos'
@@ -221,4 +227,5 @@ def exibir_lista_medico():
         else:
             console.print("[bold red]Valor inválido![/bold red]")
 
-'''
+if __name__ == "__main__":
+    menu()

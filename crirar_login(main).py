@@ -206,7 +206,7 @@ def main():
         console.print("[bold yellow]1. Fazer login")
         console.print("[bold yellow]2. Cadastrar novo login")
         console.print("[bold red]3. Sair")
-        opcao = console.input("Escolha uma opção: ")
+        opcao = console.input("[bold blue]Escolha uma opção: ")
         
         if opcao == "1":
             usuario_logado = fazer_login()

@@ -65,45 +65,45 @@ def cadastrar():
     else:
         id_paciente = 1
 
-    nome = input('Nome completo do paciente: ').strip()
+    nome = console.input('[bold yellow]Nome completo do paciente: ').strip()
 
     console.print("\nSelecione o gênero:", style="bold cyan")
     for chave, genero in lista_genero.items():
         console.print(f"[cyan]{chave}[/] - {genero}")
-    genero = int(input('Digite o número correspondente ao gênero: '))
+    genero = int(console.input('[bold yellow]Digite o número correspondente ao gênero: '))
     genero = lista_genero.get(genero, "Não informado")  # Converte o número para o gênero correspondente
 
 
 
-    data_nascimento = input('Digite a data de nascimento (DD/MM/AAAA): ').strip()
+    data_nascimento = console.input('[bold yellow]Digite a data de nascimento (DD/MM/AAAA): ').strip()
     data_formatada = validar_data(data_nascimento)
     if not data_formatada:
         console.print("[red]⚠️ Data inválida! Tente novamente.[/]")
         return  
 
     while True:
-        cpf = input('Digite o CPF do paciente: ').strip()
-        if validar_cpf_paciente(cpf):
+        cpf = console.input('[bold yellow]Digite o CPF do paciente: ').strip()
+        if not validar_cpf_paciente(cpf):
             break
     while True:
-        telefone = input('Digite o telefone do paciente: ').strip()
-        if validar_telefone(telefone):
+        telefone = console.input('[bold yellow]Digite o telefone do paciente: ').strip()
+        if not validar_telefone(telefone):
             break
     while True:
-        cep = input('Digite o CEP do paciente: ').strip()
-        if validar_cep(cep):
+        cep = console.input('[bold yellow]Digite o CEP do paciente: ').strip()
+        if not validar_cep(cep):
             break
     
     while True:
-        email = input('Digite o e-mail do paciente: ').strip()
-        if validar_email(email):
+        email = console.input('[bold yellow]Digite o e-mail do paciente: ').strip()
+        if not validar_email(email):
             break
 
     console.print("\nSelecione o convênio:", style="bold cyan")
     for chave in lista_convenio.keys():
         console.print(f"[cyan]{chave}[/]")
 
-    convenio = input('Digite o nome do convênio do paciente (caso não possua, digite "nao"): ').strip().upper()
+    convenio = console.input('[bold yellow]Digite o nome do convênio do paciente (caso não possua, digite "nao"): ').strip().upper()
     desconto = lista_convenio.get(convenio, "Não informado") * 100
 
     dados = carregar_dados()
@@ -134,7 +134,7 @@ def cadastrar():
 # Função para procurar um paciente pelo ID
 def procurar_paciente():
     dados = carregar_dados()
-    filtro = int(input('Digite o ID do paciente (apenas números): '))
+    filtro = int(console.input('Digite o ID do paciente (apenas números): '))
 
     for paciente in dados['pacientes']:
         if paciente['ID_PACIENTE'] == filtro:
@@ -179,7 +179,7 @@ def listar_pacientes():
 
 def delet_pacientes():
     dados = carregar_dados()
-    id_paciente = int(input('Digite o ID do paciente que deseja remover: '))
+    id_paciente = int(console.input('[bold yellow]Digite o ID do paciente que deseja remover: '))
 
     for paciente in dados["pacientes"]:
         if paciente["ID_PACIENTE"] == id_paciente:
@@ -192,29 +192,29 @@ def delet_pacientes():
 
 def modificar_dados():
     dados = carregar_dados()
-    id_paciente = int(input('Digite o CPF do paciente que deseja modificar: '))
+    id_paciente = int(console.input('[bold yellow]Digite o CPF do paciente que deseja modificar: '))
     
     for paciente in dados["pacientes"]:
         if paciente["ID_PACIENTE"] == id_paciente:
             console.print("1 - Nome\n2 - Telefone\n3 - E-mail\n4 - CEP\n5 - Data de nascimento\n0 - Voltar")
             
             try:
-                opcao = int(input("Selecione uma opção: "))
+                opcao = int(console.input("[bold yellow]Selecione uma opção: "))
             except ValueError:
                 console.print("[red]⚠️ Entrada inválida.[/]")
                 return
             
             if opcao == 1:
-                paciente["nome"] = input("Novo nome: ").strip()
+                paciente["nome"] = console.input("[bold yellow]Novo nome: ").strip()
             elif opcao == 2:
                 while True:
-                    telefone = input("Novo telefone: ").strip()
+                    telefone = console.input("[bold yellow]Novo telefone: ").strip()
                     if validar_telefone(telefone):
                         paciente["telefone"] = telefone
                         break
                     console.print("[red]⚠️ Telefone inválido![/]")
             elif opcao == 3:
-                email = input("Novo e-mail: ").strip()
+                email = console.input("[bold yellow]Novo e-mail: ").strip()
                 if validar_email(email):
                     paciente["email"] = email
                 else:
@@ -222,14 +222,14 @@ def modificar_dados():
                     return
             elif opcao == 4:
                 while True:
-                    cep = input("Novo CEP: ").strip()
+                    cep = console.input("Novo CEP: ").strip()
                     if validar_cep(cep):
                         paciente["cep"] = cep
                         break
                     console.print("[red]⚠️ CEP inválido![/]")
             elif opcao == 5:
                 while True:
-                    data_nascimento = input("Nova data de nascimento (DD/MM/AAAA): ").strip()
+                    data_nascimento = console.input("Nova data de nascimento (DD/MM/AAAA): ").strip()
                     if validar_data(data_nascimento):
                         paciente["data_nascimento"] = data_nascimento
                         break
@@ -259,7 +259,7 @@ while True:
     console.print("[bold cyan]5[/] - Modificar dados de um paciente")
     console.print("[bold cyan]0[/] - Sair do sistema")
 
-    opcao = int(input('Escolha uma opção: '))
+    opcao = int(console.input('Escolha uma opção: '))
     if opcao == 1:
         cadastrar()
     elif opcao == 2:
@@ -287,6 +287,5 @@ while True:
         break
     else:
         console.print("[red]⚠️ Opção inválida. Tente novamente.[/]")
-
-
 '''
+

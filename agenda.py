@@ -16,7 +16,8 @@ import json
 from datetime import date as dt
 from datetime import timedelta,datetime
 from criando_lista_pacientes import cadastrar
-
+from rich.console import Console
+console = Console()
 
 def obter_semana(data_str):
     return datetime.strptime(data_str, "%Y-%m-%d").isocalendar()[1]
@@ -80,7 +81,7 @@ def agendamento():
     proximo_mes = True #Enquanto não ficar false vai passando para o proximo mes, no agendamento do dia
     try:
         #parte 1 - Paciente já cadastrado, se nao estiver por favor vá para o cadastramento pelo terminal
-        id_paciente = int(input("Digite o id do paciente: "))
+        id_paciente = int(console.input("[bold cyan]Digite o id do paciente: "))
         #verificação de id
         with open('pacientes.json','r') as arquivo:
             file = json.load(arquivo)
@@ -96,13 +97,13 @@ def agendamento():
                 cadastrar()
 
         #parte 2 - tipo de consulta
-        tipo_consulta = input('Digite o tipo de consulta: ')
+        tipo_consulta = console.input('[bold cyan]Digite o tipo de consulta: ')
         #parte 3 - escolher medico
         with open('lista_medicos.json', 'r') as arquivo:
             file = json.load(arquivo)
             for i in file:
                 print(f'ID:{i['ID']} - Dr(a) {i['Nome']} - {i["especializacao"]}')
-            id_medico = int(input('Digite o ID do médico que deseja marcar a consulta: '))
+            id_medico = int(console.input('[bold cyan]Digite o ID do médico que deseja marcar a consulta: '))
             for i in file:
                 if id_medico == i['ID']:
                     medico = i['Nome']
@@ -122,7 +123,7 @@ def agendamento():
                     indice += 1
                     lista_dias_disponiveis.append(data_corrente)
                 data_corrente += timedelta(days=1)
-            escolha_data = int(input("Selecione o indice da data a qual deseja fazer o agendamento, caso queira agendar para o próximo mes digite 0!\n Escolha: "))
+            escolha_data = int(console.input("[bold cyan]Selecione o indice da data a qual deseja fazer o agendamento, caso queira agendar para o próximo mes digite 0!\n Escolha: "))
             if escolha_data > indice:
                 print('Data inválida!')
             elif escolha_data != 0:
@@ -146,7 +147,7 @@ def agendamento():
                 for i in horarios_ofertados:
                     print(f'{indice}. {i}')
                     indice+=1
-                escolha_horario = int(input('Escolha o horário desejado entre os horários disponíveis: '))  
+                escolha_horario = int(console.input('[bold cyan]Escolha o horário desejado entre os horários disponíveis: '))  
                 horario = horarios_ofertados[escolha_horario-1]
         except FileNotFoundError:
             #caso arquivo não criado
@@ -155,7 +156,7 @@ def agendamento():
             for i in horarios_ofertados:
                 print(f'{indice}. {i}')
                 indice+=1
-            escolha_horario = int(input('Escolha o horário desejado entre os horários disponíveis: '))
+            escolha_horario = int(console.input('[bold cyan]Escolha o horário desejado entre os horários disponíveis: '))
             horario = horarios_ofertados[escolha_horario-1]
         except json.JSONDecodeError:
             print("Error decoding JSON from the file. Ensure the JSON is properly formatted.")
@@ -189,6 +190,7 @@ def agendamento():
         print("Error decoding JSON from the file. Ensure the JSON is properly formatted.")
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
-
-agendamento()
-agenda_para_lista_medico()
+# Iniciar o programa
+if __name__ == "__main__":
+    agendamento()
+    agenda_para_lista_medico()

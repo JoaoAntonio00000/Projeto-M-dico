@@ -13,9 +13,6 @@ def verificar_se_arquivo_existe():
         with open(caminho_arquivo, 'w', encoding='utf-8') as arquivo:
             json.dump([], arquivo, indent=4, ensure_ascii=False)
         console.print("[bold green]Arquivo criado com sucesso![/bold green]")
-    else:
-        console.print("[bold green]Arquivo já existe.[/bold green]")
-
 verificar_se_arquivo_existe()
 
 # Carregar os dados da lista de secretárias
@@ -52,21 +49,21 @@ def adicionar_secretaria():
         
         while True:
             cpf = console.input("[bold yellow]Informe o CPF da Secretária: [/bold yellow]").strip()
-            if validar_cpf_secretaria(cpf):
+            if not validar_cpf_secretaria(cpf):
                 break
             else:
                 console.print("[bold red]CPF inválido ou já cadastrado. Tente novamente.[/bold red]")
         
         while True:
             data_nascimento = console.input("[bold yellow]Digite a data de nascimento (DD/MM/AAAA): [/bold yellow]").strip()
-            if validar_data(data_nascimento):
+            if not validar_data(data_nascimento):
                 break
             else:
                 console.print("[bold red]Data de nascimento inválida! Tente novamente.[/bold red]")
         
         while True:
             email = console.input("[bold yellow]Informe o e-mail da Secretária: [/bold yellow]").strip()
-            if validar_email(email):
+            if not validar_email(email):
                 break
             else:
                 console.print("[bold red]E-mail inválido! Digite novamente.[/bold red]")
@@ -189,7 +186,7 @@ def exibir_lista_secretaria():
 
     console.print(tabela)
 
-'''# Menu principal
+# Menu principal
 def menu():
     while True:
         opcao = console.input("[bold magenta][1]-Adicionar Secretária"
@@ -212,4 +209,3 @@ def menu():
             break
         else:
             console.print("[bold red]Valor inválido![/bold red]")
-'''
