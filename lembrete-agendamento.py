@@ -16,49 +16,71 @@ import os
 load_dotenv()
 
 email_gerenciador = os.getenv('EMAIL_REMETENTE')
-password = os.getenv('PASSWORD')
+password_gerenciador = os.getenv('PASSWORD')
 
 
+#buscando o nome do paciente pra enviar o email personalizado com o nome dos trem
 
-def salvar_dados():
-
+def nome_lembrete(email_pacient):
     with open('pacientes.json', 'r', encoding= 'utf-8') as arquivo_paciente:
         pacientes = json.load(arquivo_paciente)
-
-    # Abrindo o arquivo original e carregando os dados
-    with open('agenda.json', 'r', encoding='utf-8') as arquivo_agenda:
-        agendamentos = json.load(arquivo_agenda)  # Carrega os dados do JSON
-
-    lembrete= []
-    # Salvando em um novo arqui vo JSON
-
-    for consulta in agendamentos:
-        email = consulta.get('email')
-        hora = consulta.get('hora')
-        data = consulta.get('data')
-        
-
-    with open('emails_paciente_lembrete.json', 'w', encoding='utf-8') as arquivo:
-        json.dump(lembrete, arquivo, ensure_ascii=False, indent=4)
-
-    print("Arquivo 'emails_paciente_lembrete.json' salvo com sucesso!")
-
-# Executando a função
-salvar_dados()
-
-
-def enviar_lembrete():
+    return next((p['nome'] for p in pacientes if p['email'] == email_pacient), "Paciente sem identificação")
 
 
 
 
-
-
+def enviar_email_confirmacao(destinatario, nome_paciente, data_consulta, hora_consulta):
     msg = EmailMessage()
-    msg['Subject'] = 'Lembrete de consulta agendada'
+    msg['Subject'] = '📅 Lembrete de Consulta'
     msg['From'] = email_gerenciador
     msg['To'] = destinatario
-    msg.set_content(mensagem)
+
+    html_message = f""""
+    <html>
+    <body style="font-family: Arial, sans-serif; text-align: center;">
+        <h2 style="color: #2E86C1;">Olá, {nome_paciente}!</h2>
+        <p style="font-size: 18px;">Este é um lembrete de que você tem uma consulta agendada.</p>
+        <p style="font-size: 20px;"><strong>📅 Data:</strong> {data_consulta}</p>
+        <p style="font-size: 20px;"><strong>⏰ Horário:</strong> {hora_consulta}</p>
+        <p style="font-size: 16px;">Se precisar remarcar, entre em contato com a clínica.</p>
+        <br>
+        <p style="color: gray; font-size: 14px;">Este é um e-mail automático, por favor, não responda.</p>
+    </body>
+    </html>
+
+    """
+
+    msg.add_alternative(html_message, subtype = 'html')
+    try:
+        with smtplib.SMTP('smtp.gmail.com', 587) as server:
+            server.starttls()
+            server.login(email_gerenciador, password_gerenciador)
+            server.send_message(msg)
+            print(f'E-mail de lembrete enviado para: {destinatario}')
+    except Exception as e:
+        print(f'Ocorreu um erro o enviar o e-mail de lembre para: {destinatario}. Erro: {e}')
+
+def verificar_envio():
+    with open('agendamento_semanal_atualizada.json', 'r', encoding= 'utf-8') as arquivo_agenda:
+        agendamentos = json.load(arquivo_agenda)
+    now = datetime.datetime.now()
+
+    for consulta in agendamentos:
+        email = consulta['email']
+        data_consulta = consulta['data']
+        hora_consulta = consulta['hora']
+        #CONVERTER A HORA E Data
+        data_hora = datetime.datetime.strftime(f'{data_consulta}{hora_consulta}','%D/%M/%A %H:%M' )
+        #calculo das 24h antes
+        lembrete = data_hora - datetime.timedelta(hours=24)
+
+        #envio dos emails
+
+        if now >= lembrete and now < data_hora:
+            nome_paciente = nome_lembrete(email)
+            enviar_email_confirmacao(email, nome_paciente, data_consulta, hora_consulta)
+
+verificar_envio()
 
 
-# para nao esquecer - buscar o nome do paciente da lista json de pacientes - porém, buscar o horario =, email e data a ser enviado da lista de agendamentos json - Agr, pensar se é melhor ou nao criar um arquivo json com os emails e tudo que deve ser enviado do mesmo e deixar salvos
+
