@@ -4,7 +4,7 @@ so faz a questao de adicionar e modificar ela no terminal , e pensar ja como int
 
 cada vez que acessar a agenda ja faz uma limpa nela e adicona no log os que ja foram
 
-print agenda diaria
+console.print agenda diaria
 
 cancelar
 
@@ -24,7 +24,7 @@ def obter_semana(data_str):
 
 #verifica quais dias o medico esta livre
 def verifica_disponibilidade_medico(arquivo):
-    print('Ainda nada')
+    console.print('[bold red]Ainda nada')
 
 #mudar a lista de horarios da medico para false de acordo com a agenda, fechada de segunda a sexta
 def agenda_para_lista_medico():
@@ -74,7 +74,7 @@ def agenda_para_lista_medico():
     with open("agenda_semanal_atualizada.json", "w", encoding="utf-8") as f:
         json.dump(agenda_semanal, f, indent=4, ensure_ascii=False)
 
-    print("Agenda semanal progressivamente atualizada!")
+    console.print("[bold green]Agenda semanal progressivamente atualizada!")
     
 #agendamento feito pelo terminal
 def agendamento():
@@ -93,7 +93,7 @@ def agendamento():
             if paciente_existe:
                 email = file["pacientes"][int(j)]['email'] 
             else:
-                print('ID não encontrado, por favor faça o cadastramento!\nRedirecionando!')
+                console.print('[bold red]ID não encontrado, por favor faça o cadastramento!\nRedirecionando!')
                 cadastrar()
 
         #parte 2 - tipo de consulta
@@ -102,7 +102,7 @@ def agendamento():
         with open('lista_medicos.json', 'r') as arquivo:
             file = json.load(arquivo)
             for i in file:
-                print(f'ID:{i['ID']} - Dr(a) {i['Nome']} - {i["especializacao"]}')
+                console.print(f'[bold cyan]ID:{i['ID']} - Dr(a) {i['Nome']} - {i["especializacao"]}')
             id_medico = int(console.input('[bold cyan]Digite o ID do médico que deseja marcar a consulta: '))
             for i in file:
                 if id_medico == i['ID']:
@@ -119,13 +119,13 @@ def agendamento():
             while data_corrente <= ultimo_dia_mes:
                 dia_da_semana = data_corrente.weekday()
                 if dia_da_semana < 5:  # 0=segunda-feira, 4=sexta-feira
-                    print(f"{indice}. {data_corrente.strftime('%d/%m/%Y')} - {dias[dia_da_semana]}")
+                    console.print(f"[bold cyan]{indice}. {data_corrente.strftime('%d/%m/%Y')} - {dias[dia_da_semana]}")
                     indice += 1
                     lista_dias_disponiveis.append(data_corrente)
                 data_corrente += timedelta(days=1)
             escolha_data = int(console.input("[bold cyan]Selecione o indice da data a qual deseja fazer o agendamento, caso queira agendar para o próximo mes digite 0!\n Escolha: "))
             if escolha_data > indice:
-                print('Data inválida!')
+                console.print('[bold red]Data inválida!')
             elif escolha_data != 0:
                 proximo_mes = False
                 data = lista_dias_disponiveis[escolha_data - 1] #para pegar o dia
@@ -145,7 +145,7 @@ def agendamento():
                             horarios_ofertados.remove(itens[j]['hora'])
                 indice = 1
                 for i in horarios_ofertados:
-                    print(f'{indice}. {i}')
+                    console.print(f'[bold cyan]{indice}. {i}')
                     indice+=1
                 escolha_horario = int(console.input('[bold cyan]Escolha o horário desejado entre os horários disponíveis: '))  
                 horario = horarios_ofertados[escolha_horario-1]
@@ -154,14 +154,14 @@ def agendamento():
             horarios_ofertados = ['8:00', '9:00', '10:00','11:00','13:00','14:00', '15:00', '16:00', '17:00']
             indice = 1
             for i in horarios_ofertados:
-                print(f'{indice}. {i}')
+                console.print(f'[bold cyan]{indice}. {i}')
                 indice+=1
             escolha_horario = int(console.input('[bold cyan]Escolha o horário desejado entre os horários disponíveis: '))
             horario = horarios_ofertados[escolha_horario-1]
         except json.JSONDecodeError:
-            print("Error decoding JSON from the file. Ensure the JSON is properly formatted.")
+            console.print("[bold red]Error decoding JSON from the file. Ensure the JSON is properly formatted.")
         except Exception as e:
-            print(f"An unexpected error occurred: {e}")
+            console.print(f"[bold red]An unexpected error occurred: {e}")
 
         dia_da_semana = data.weekday()
         dia_semana = dias[dia_da_semana]
@@ -183,13 +183,13 @@ def agendamento():
         agenda[dia_semana.lower()].append(nova_consulta)
         with open("agenda.json", "w") as arquivo:
             json.dump(agenda, arquivo, indent=4)
-        print('Agendamento realizado.')
+        console.print('[bold green]Agendamento realizado.')
     except FileNotFoundError:
-        print("The file 'lista_medicos.json' was not found.")
+        console.print("The file 'lista_medicos.json' was not found.")
     except json.JSONDecodeError:
-        print("Error decoding JSON from the file. Ensure the JSON is properly formatted.")
+        console.print("[bold red]Error decoding JSON from the file. Ensure the JSON is properly formatted.")
     except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+        console.print(f"[bold red]An unexpected error occurred: {e}")
 # Iniciar o programa
 if __name__ == "__main__":
     agendamento()
