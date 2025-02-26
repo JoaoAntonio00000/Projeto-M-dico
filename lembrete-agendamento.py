@@ -21,14 +21,10 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S")
 
-
-
-
 load_dotenv()
 
 email_gerenciador = os.getenv('EMAIL_REMETENTE')
 password_gerenciador = os.getenv('PASSWORD')
-
 
 #buscando o nome do paciente pra enviar o email personalizado com o nome dos trem
 
@@ -97,7 +93,6 @@ def verificar_envio():
     except Exception as e:
         logging.error(f"Erro ao verificar os envios: {e}")
         print(f"Erro ao verificar os envios: {e}")
-
 
 
 # Rodar a função de verificação a cada 1 hora
