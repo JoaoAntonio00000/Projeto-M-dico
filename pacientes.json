@@ -23,6 +23,18 @@
             "cep": "78054-023",
             "convenio": "UNIMED",
             "desconto": 50.0
+        },
+        {
+            "nome": "Gustavo",
+            "cpf": "04521245144",
+            "data_nascimento": "22/07/2005",
+            "genero": "M",
+            "telefone": "999100427",
+            "email": "gustavo.yoshiro22@gmail.com",
+            "cep": "78070430",
+            "convenio": "N",
+            "desconto": 50.0,
+            "ID_PACIENTE": 4
         }
     ]
 }

@@ -4,7 +4,7 @@ import json
 import os
 import datetime
 
-ARQUIVO_AGENDA = "agenda.json"
+ARQUIVO_AGENDA = "agenda.json"()
 ARQUIVO_PACIENTES = "pacientes.json"
 ARQUIVO_MEDICOS = "lista_medicos.json"
 
@@ -141,8 +141,25 @@ async def finalizar_agendamento(update: Update, context: CallbackContext) -> int
     medico = context.user_data["medico"]
     id_medico = context.user_data["id_medico"]
     tipo_consulta = "presencial"
+    try:
+        with open("id_consulta.json","r") as file:
+            arquivo = json.load(file)
+            id_consulta = arquivo["id"] + 1
+        with open("id_consulta.json","w") as file:
+            dados = {"id":id_consulta}
+            json.dump(dados,file)
+        
+    except FileNotFoundError:
+        with open("id_consulta.json","w") as file:
+            dados = {"id":1}
+            json.dump(dados,file)
+    except json.JSONDecodeError:
+        print("Error decoding JSON from the file. Ensure the JSON is properly formatted.")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
 
     nova_consulta = {
+        "id_consulta": id_consulta,
         "dia": data,
         "hora": horario,
         "confirmacao_paciente": "pendente",

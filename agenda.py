@@ -9,8 +9,6 @@ console.print agenda diaria
 cancelar
 
 mudar horario
-
-email do paciente na agenda e verificar se cadastro existe
 '''
 import json
 from datetime import date as dt
@@ -18,6 +16,116 @@ from datetime import timedelta,datetime
 from criando_lista_pacientes import cadastrar
 from rich.console import Console
 console = Console()
+
+def cancelar():
+    try:
+        with open("agenda.json", "r") as f:
+            agenda = json.load(f)
+
+        while True:
+            escolha = console.input("[bold cyan]Deseja cancelar por dia (1) ou por ID da consulta (2)? (Digite 0 para voltar) ")
+
+            if escolha == "0":
+                return
+
+            if escolha == "1":
+                hoje = dt.today()
+                mes_atual = hoje.month
+                consultas_mes = {}
+
+                # Mapeia datas para o nome do dia da semana
+                for dia_semana, consultas in agenda.items():
+                    for consulta in consultas:
+                        data_consulta = datetime.strptime(consulta["dia"], "%Y-%m-%d")
+                        if data_consulta.month == mes_atual:
+                            data_formatada = data_consulta.strftime("%d/%m/%Y")
+                            consultas_mes.setdefault(data_formatada, []).append((dia_semana, consulta))
+
+                if not consultas_mes:
+                    console.print("[bold red]Nenhuma consulta encontrada para este mês.")
+                    return
+
+                while True:
+                    console.print("[bold cyan]Dias com consultas no mês atual:")
+                    for data in sorted(consultas_mes.keys()):
+                        console.print(f"[bold yellow]{data}")
+
+                    dia_escolhido = console.input("[bold cyan]Digite a data no formato DD/MM/AAAA (ou 0 para voltar): ")
+
+                    if dia_escolhido == "0":
+                        break  # Volta para a escolha entre dia ou ID
+
+                    if dia_escolhido not in consultas_mes:
+                        console.print("[bold red]Nenhuma consulta encontrada para essa data.")
+                        continue
+
+                    while True:
+                        console.print(f"[bold cyan]Consultas para {dia_escolhido}:")
+                        consultas_do_dia = consultas_mes[dia_escolhido]
+
+                        for idx, (dia_semana, consulta) in enumerate(consultas_do_dia, 1):
+                            console.print(f"{idx}. [bold yellow]ID {consulta['id_consulta']} - {consulta['hora']} - {consulta['medico']}")
+
+                        escolha_cancelar = console.input("[bold cyan]Digite o número da consulta para cancelar (ou 0 para voltar): ")
+
+                        if escolha_cancelar == "0":
+                            break  # Volta para a escolha da data
+
+                        try:
+                            escolha_cancelar = int(escolha_cancelar) - 1
+                            if 0 <= escolha_cancelar < len(consultas_do_dia):
+                                dia_semana, consulta_a_remover = consultas_do_dia[escolha_cancelar]
+                                agenda[dia_semana].remove(consulta_a_remover)
+
+                                with open("agenda.json", "w") as f:
+                                    json.dump(agenda, f, indent=4, ensure_ascii=False)
+
+                                console.print("[bold green]Consulta cancelada com sucesso!")
+                                return  # Sai da função após cancelar
+
+                            else:
+                                console.print("[bold red]Escolha inválida.")
+
+                        except ValueError:
+                            console.print("[bold red]Digite um número válido.")
+
+            elif escolha == "2":
+                while True:
+                    id_consulta = console.input("[bold cyan]Digite o ID da consulta a ser cancelada (ou 0 para voltar): ")
+
+                    if id_consulta == "0":
+                        break  # Volta para a escolha entre dia ou ID
+
+                    try:
+                        id_consulta = int(id_consulta)
+                        consulta_encontrada = False
+
+                        for dia_semana, consultas in agenda.items():
+                            for consulta in consultas:
+                                if consulta["id_consulta"] == id_consulta:
+                                    agenda[dia_semana].remove(consulta)
+                                    consulta_encontrada = True
+
+                                    with open("agenda.json", "w") as f:
+                                        json.dump(agenda, f, indent=4, ensure_ascii=False)
+
+                                    console.print("[bold green]Consulta cancelada com sucesso!")
+                                    return  # Sai da função após cancelar
+
+                        if not consulta_encontrada:
+                            console.print("[bold red]Consulta não encontrada!")
+
+                    except ValueError:
+                        console.print("[bold red]Digite um número válido.")
+
+    except FileNotFoundError:
+        console.print("[bold red]Arquivo de agenda não encontrado.")
+    except json.JSONDecodeError:
+        console.print("[bold red]Erro ao ler o arquivo JSON. Verifique a formatação.")
+    except Exception as e:
+        console.print(f"[bold red]Ocorreu um erro inesperado: {e}")
+
+
 
 def obter_semana(data_str):
     return datetime.strptime(data_str, "%Y-%m-%d").isocalendar()[1]
@@ -163,9 +271,27 @@ def agendamento():
         except Exception as e:
             console.print(f"[bold red]An unexpected error occurred: {e}")
 
+        try:
+            with open("id_consulta.json","r") as file:
+                arquivo = json.load(file)
+                id_consulta = arquivo["id"] + 1
+            with open("id_consulta.json","w") as file:
+                dados = {"id":id_consulta}
+                json.dump(dados,file)
+            
+        except FileNotFoundError:
+            with open("id_consulta.json","w") as file:
+                dados = {"id":1}
+                json.dump(dados,file)
+        except json.JSONDecodeError:
+            console.print("[bold red]Error decoding JSON from the file. Ensure the JSON is properly formatted.")
+        except Exception as e:
+            console.print(f"[bold red]An unexpected error occurred: {e}")
         dia_da_semana = data.weekday()
         dia_semana = dias[dia_da_semana]
         nova_consulta = {
+
+                    "id_consulta": id_consulta,
                     "dia": str(data),
                     "hora": horario,
                     "confirmacao_paciente": "pendente",
