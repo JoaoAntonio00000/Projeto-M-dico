@@ -73,8 +73,6 @@ def enviar_email(destinatario, nome_paciente, data_consulta, imagem_anexo=None):
 
 
 
-
-
 # Monitoramento das confirmações / pra n dar erro ne
 
 def monitorar_confirmacoes(arquivo_dados, arquivo_nomes, imagem_anexo=None):
