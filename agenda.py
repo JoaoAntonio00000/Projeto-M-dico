@@ -13,6 +13,7 @@ from criando_lista_pacientes import cadastrar
 from rich.console import Console
 console = Console()
 from rich.table import Table
+from gerador_de_codigo import gerar_codigo
 
 
 def print_agenda():
@@ -355,6 +356,7 @@ def agendamento():
             console.print(f"[bold red]An unexpected error occurred: {e}")
         dia_da_semana = data.weekday()
         dia_semana = dias[dia_da_semana]
+        codigo = gerar_codigo()
         nova_consulta = {
 
                     "id_consulta": id_consulta,
@@ -366,6 +368,7 @@ def agendamento():
                     "tipo_de_consulta": tipo_consulta,
                     "id_paciente": id_paciente,
                     "email_paciente": email,
+                    "codigo_consulta": codigo,
                 }
         try:
             with open("agenda.json", "r") as arquivo:

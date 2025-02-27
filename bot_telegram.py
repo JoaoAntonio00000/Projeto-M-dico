@@ -5,7 +5,6 @@ import json
 from cadastro_bot_telegram import cadastro_handler
 from agendamento_bot_telegram import agendamento_handler
 
-
 with open('pacientes.json', 'r') as arquivo:
     file = json.load(arquivo)
 

@@ -3,8 +3,9 @@ from telegram.ext import Application, ConversationHandler, CommandHandler, Callb
 import json
 import os
 import datetime
+from gerador_de_codigo import gerar_codigo
 
-ARQUIVO_AGENDA = "agenda.json"()
+ARQUIVO_AGENDA = "agenda.json"
 ARQUIVO_PACIENTES = "pacientes.json"
 ARQUIVO_MEDICOS = "lista_medicos.json"
 
@@ -157,7 +158,7 @@ async def finalizar_agendamento(update: Update, context: CallbackContext) -> int
         print("Error decoding JSON from the file. Ensure the JSON is properly formatted.")
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
-
+    codigo = gerar_codigo()
     nova_consulta = {
         "id_consulta": id_consulta,
         "dia": data,
@@ -168,6 +169,7 @@ async def finalizar_agendamento(update: Update, context: CallbackContext) -> int
         "tipo_de_consulta": tipo_consulta,
         "id_paciente": id_paciente,
         "email_paciente": email,
+        "codigo_consulta": codigo,
     }
 
     # Verifica se o arquivo "agenda.json" existe

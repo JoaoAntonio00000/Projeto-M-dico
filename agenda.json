@@ -5,13 +5,14 @@
         {
             "id_consulta": 1,
             "dia": "2025-02-26",
-            "hora": "9:00",
+            "hora": "8:00",
             "confirmacao_paciente": "pendente",
             "medico": "kley",
             "id_medico": 1,
             "tipo_de_consulta": "retorno",
             "id_paciente": 2,
-            "email_paciente": "anabarbiero66@gmail.com"
+            "email_paciente": "anabarbiero66@gmail.com",
+            "codigo_consulta": "N7B-J2B-WZC"
         }
     ],
     "quinta": [],
