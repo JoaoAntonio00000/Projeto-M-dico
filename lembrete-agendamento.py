@@ -108,7 +108,6 @@ def verificar_envio():
         print(f"Erro ao verificar os envios: {e}")
 
 
-# Rodar a função de verificação a cada 1 hora
 
 schedule.every(1).hours.do(verificar_envio)
 print("⏳ Sistema de lembrete de consultas iniciado...")
