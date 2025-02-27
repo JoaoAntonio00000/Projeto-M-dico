@@ -5,10 +5,6 @@ so faz a questao de adicionar e modificar ela no terminal , e pensar ja como int
 cada vez que acessar a agenda ja faz uma limpa nela e adicona no log os que ja foram
 
 console.print agenda diaria
-
-cancelar
-
-mudar horario
 '''
 import json
 from datetime import date as dt
@@ -16,6 +12,76 @@ from datetime import timedelta,datetime
 from criando_lista_pacientes import cadastrar
 from rich.console import Console
 console = Console()
+from rich.table import Table
+
+
+def print_agenda():
+    try:
+        with open("agenda.json", "r") as f:
+            agenda = json.load(f)
+
+        hoje = dt.today()
+        mes_atual = hoje.month
+        consultas_mes = {}
+
+        # Mapeia datas para o nome do dia da semana
+        for dia_semana, consultas in agenda.items():
+            for consulta in consultas:
+                data_consulta = datetime.strptime(consulta["dia"], "%Y-%m-%d")
+                if data_consulta.month == mes_atual:
+                    data_formatada = data_consulta.strftime("%d/%m/%Y")
+                    consultas_mes.setdefault(data_formatada, []).append((dia_semana, consulta))
+
+        if not consultas_mes:
+            console.print("[bold red]Nenhuma consulta encontrada para este mês.")
+            return
+
+        while True:
+            console.print("[bold cyan]Dias com consultas no mês atual:")
+            for data in sorted(consultas_mes.keys()):
+                console.print(f"[bold yellow]{data}")
+
+            dia_escolhido = console.input("[bold cyan]Digite a data no formato DD/MM/AAAA (ou 0 para voltar): ")
+
+            if dia_escolhido == "0":
+                return  # Sai da função se o usuário quiser voltar
+
+            if dia_escolhido not in consultas_mes:
+                console.print("[bold red]Nenhuma consulta encontrada para essa data.")
+                continue
+
+            # Criando a tabela
+            tabela = Table(title=f"Consultas para {dia_escolhido}", show_lines=True)
+            tabela.add_column("ID", justify="center", style="bold cyan")
+            tabela.add_column("Hora", justify="center", style="bold yellow")
+            tabela.add_column("Médico", justify="left", style="bold green")
+            tabela.add_column("Tipo", justify="left", style="bold blue")
+            tabela.add_column("Paciente ID", justify="center", style="bold magenta")
+            tabela.add_column("Confirmação", justify="left", style="bold red")
+
+            consultas_do_dia = consultas_mes[dia_escolhido]
+
+            for _, consulta in consultas_do_dia:
+                tabela.add_row(
+                    str(consulta["id_consulta"]),
+                    consulta["hora"],
+                    consulta["medico"],
+                    consulta["tipo_de_consulta"],
+                    str(consulta["id_paciente"]),
+                    consulta["confirmacao_paciente"]
+                )
+
+            console.print(tabela)
+            console.input("[bold cyan]Pressione Enter para voltar ao menu...")  # Apenas pausa antes de voltar
+            return  # Volta para o menu principal
+
+    except FileNotFoundError:
+        console.print("[bold red]Arquivo de agenda não encontrado.")
+    except json.JSONDecodeError:
+        console.print("[bold red]Erro ao ler o arquivo JSON. Verifique a formatação.")
+    except Exception as e:
+        console.print(f"[bold red]Ocorreu um erro inesperado: {e}")
+
 
 def cancelar():
     try:
