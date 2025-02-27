@@ -1,6 +1,3 @@
-'''
-Criar um codigo que leia os emails das consultas e dos pacientes e envie um email lembrando-o da consulta 24h antes do horario marcado
-'''
 
 import json
 import datetime
@@ -34,7 +31,7 @@ def nome_lembrete(email_pacient):
     return next((p['nome'] for p in pacientes if p['email'] == email_pacient), "Paciente sem identificação")
 
 
-def enviar_email_confirmacao(destinatario, nome_paciente, data_consulta, hora_consulta):
+def enviar_email_confirmacao(destinatario, nome_paciente, data_consulta, hora_consulta, imagem_rodape=None):
     msg = EmailMessage()
     msg['Subject'] = '📅 Lembrete de Consulta'
     msg['From'] = email_gerenciador
@@ -50,12 +47,26 @@ def enviar_email_confirmacao(destinatario, nome_paciente, data_consulta, hora_co
         <p style="font-size: 16px;">Se precisar remarcar, entre em contato com a clínica.</p>
         <br>
         <p style="color: gray; font-size: 14px;">Este é um e-mail automático, por favor, não responda.</p>
+        
+        <footer style="margin-top: 20px;">
+            <img src="cid:imagem_assinatura" alt="Assinatura Digital" style="width: 150px; height: auto;">
+        </footer>
     </body>
     </html>
 
     """
 
     msg.add_alternative(html_message, subtype = 'html')
+
+
+
+    if imagem_rodape:
+        with open('cabecalho-do-email.png', 'rb') as img_file:
+            img_data = img_file.read()
+            msg.get_payload()[0].add_related(
+                img_data, 'image', 'png', cid='imagem_assinatura')
+
+
     try:
         with smtplib.SMTP('smtp.gmail.com', 587) as server:
             server.starttls()

@@ -52,14 +52,14 @@ def enviar_email(destinatario, nome_paciente, data_consulta, imagem_anexo=None):
 
 
     imagem_anexo = 'Confirmacao-de-consulta.png'
-    # Anexar a imagem se fornecida
+    # Anexar a imagem 
     if imagem_anexo and os.path.exists(imagem_anexo):
         with open(imagem_anexo, "rb") as img:
             mime_img = MIMEImage(img.read(), name="imagem.jpg")
             mime_img.add_header("Content-ID", "<minhaimagem>")  #pra deixar a imagem in line
             msg.attach(mime_img)
 
-    # Enviar e-mail
+    # envia o e-mail
     try:
         with smtplib.SMTP('smtp.gmail.com', 587) as server:
             server.starttls()
@@ -108,5 +108,5 @@ def monitorar_confirmacoes(arquivo_dados, arquivo_nomes, imagem_anexo=None):
 
         time.sleep(10)  # Verifica a cada 10 segundos
 
-# Executar monitoramento
+# Executar 
 monitorar_confirmacoes("consultas.json", "pacientes.json", "imagem_anexo.jpg")
