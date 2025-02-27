@@ -97,7 +97,7 @@ async def resposta_padrao(update: Update, context: CallbackContext) -> None:
     )
 
 def main():
-    token = "7043049373:AAErrO95Kh9oXSpNuKI92k2kUs1hqLtMnJk"
+    token = "8192805655:AAFee0YvKt3mBezS2wb-hMWO8WV_w98ib5I"
     application = Application.builder().token(token).build()
 
     application.add_handler(CommandHandler("start", start))
