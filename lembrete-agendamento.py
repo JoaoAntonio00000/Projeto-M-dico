@@ -31,7 +31,7 @@ def nome_lembrete(email_pacient):
     return next((p['nome'] for p in pacientes if p['email'] == email_pacient), "Paciente sem identificação")
 
 
-def enviar_email_confirmacao(destinatario, nome_paciente, data_consulta, hora_consulta, imagem_rodape=None):
+def enviar_email_confirmacao(destinatario, nome_paciente, codigo_confirmacao,data_consulta, hora_consulta, imagem_rodape=None):
     msg = EmailMessage()
     msg['Subject'] = '📅 Lembrete de Consulta'
     msg['From'] = email_gerenciador
@@ -44,6 +44,7 @@ def enviar_email_confirmacao(destinatario, nome_paciente, data_consulta, hora_co
         <p style="font-size: 18px;">Este é um lembrete de que você tem uma consulta agendada.</p>
         <p style="font-size: 20px;"><strong>📅 Data:</strong> {data_consulta}</p>
         <p style="font-size: 20px;"><strong>⏰ Horário:</strong> {hora_consulta}</p>
+        <p style="font-size: 16px;">Por favor, insira o código a seguir no /consulta do nosso telegram, código de confirmação: {codigo_confirmacao}, para confirmar seu agendamento</p>
         <p style="font-size: 16px;">Se precisar remarcar, entre em contato com a clínica.</p>
         <br>
         <p style="color: gray; font-size: 14px;">Este é um e-mail automático, por favor, não responda.</p>
@@ -91,6 +92,7 @@ def verificar_envio():
             email = consulta['email']
             data_consulta = consulta['data']
             hora_consulta = consulta['hora']
+            codigo_confirmacao = consulta["codigo_consulta"]
             #CONVERTER A HORA E Data
             data_hora = datetime.datetime.strftime(f'{data_consulta}{hora_consulta}','%D/%M/%A %H:%M' )
             #calculo das 24h antes
@@ -100,7 +102,7 @@ def verificar_envio():
 
             if now >= lembrete and now < data_hora:
                 nome_paciente = nome_lembrete(email)
-                enviar_email_confirmacao(email, nome_paciente, data_consulta, hora_consulta)
+                enviar_email_confirmacao(email, nome_paciente, data_consulta, hora_consulta,codigo_confirmacao)
     except Exception as e:
         logging.error(f"Erro ao verificar os envios: {e}")
         print(f"Erro ao verificar os envios: {e}")
