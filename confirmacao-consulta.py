@@ -5,9 +5,7 @@ import time
 import json
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email.mime.base import MIMEBase
 from email.mime.image import MIMEImage
-from email import encoders
 import logging
 import os
 from dotenv import load_dotenv
@@ -33,7 +31,7 @@ def enviar_email(destinatario, nome_paciente, data_consulta, imagem_anexo=None):
     msg['To'] = destinatario
     msg['Subject'] = "Confirmação da sua consulta"
 
-    # Corpo do e-mail
+    
     corpo_email = f"""
     <html>
     <body style="font-family: Arial, sans-serif; color: #333;">
@@ -83,11 +81,11 @@ def monitorar_confirmacoes(arquivo_dados, arquivo_nomes, imagem_anexo=None):
     consultas_confirmadas = set()
 
     while True:
-        # Abrir e carregar os dados do arquivo JSON das consultas
+        # JSON DAS CONSULTAS (AGENDA.JSON)
         with open('agenda.json',encoding='utf-8') as arquivo_agenda:
-            consultas = json.load(arquivo_agenda)  # Carrega um JSON em formato de dicionário/lista
+            consultas = json.load(arquivo_agenda)  
 
-        # Abrir e carregar os dados do arquivo JSON dos pacientes
+        # JSON DOS PACIENTES (PACIENTES.JSON)
 
         with open('pacientes.json', encoding='utf-8') as arquivo_paciente:
             pacientes = json.load(arquivo_paciente)
@@ -108,5 +106,5 @@ def monitorar_confirmacoes(arquivo_dados, arquivo_nomes, imagem_anexo=None):
 
         time.sleep(10)  # Verifica a cada 10 segundos
 
-# Executar 
+# Executando................
 monitorar_confirmacoes("consultas.json", "pacientes.json", "imagem_anexo.jpg")
