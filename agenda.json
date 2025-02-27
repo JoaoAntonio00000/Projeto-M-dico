@@ -1,7 +1,28 @@
 {
     "segunda": [],
     "terca": [],
-    "quarta": [],
+    "quarta": [
+        {
+            "dia": "2025-02-26",
+            "hora": "8:00",
+            "confirmacao_paciente": "pendente",
+            "medico": "kley",
+            "id_medico": 1,
+            "tipo_de_consulta": "presencial",
+            "id_paciente": 4,
+            "email_paciente": "gustavo.yoshiro22@gmail.com"
+        },
+        {
+            "dia": "2025-02-26",
+            "hora": "9:00",
+            "confirmacao_paciente": "pendente",
+            "medico": "kley",
+            "id_medico": 1,
+            "tipo_de_consulta": "presencial",
+            "id_paciente": 4,
+            "email_paciente": "gustavo.yoshiro22@gmail.com"
+        }
+    ],
     "quinta": [],
     "sexta": []
 }
