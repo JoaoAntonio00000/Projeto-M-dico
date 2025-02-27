@@ -84,6 +84,58 @@ def print_agenda():
         console.print(f"[bold red]Ocorreu um erro inesperado: {e}")
 
 
+def limpar_agenda():
+    try:
+        # Carregar a agenda atual
+        with open("agenda.json", "r") as f:
+            agenda = json.load(f)
+
+        # Tentar carregar o log de consultas antigas
+        try:
+            with open("agenda_log.json", "r") as f:
+                agenda_log = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            agenda_log = {}
+
+        hoje = datetime.today().date()
+        consultas_removidas = []
+
+        # Percorre os dias da semana e remove as consultas vencidas ou canceladas
+        for dia_semana in list(agenda.keys()):
+            consultas = agenda[dia_semana]
+            novas_consultas = []
+
+            for consulta in consultas:
+                data_consulta = datetime.strptime(consulta["dia"], "%Y-%m-%d").date()
+                if data_consulta < hoje or consulta.get("confirmacao_paciente") == "cancelado":
+                    consultas_removidas.append(consulta)
+                else:
+                    novas_consultas.append(consulta)
+
+            agenda[dia_semana] = novas_consultas  # Atualiza a agenda
+
+        if consultas_removidas:
+            # Adiciona as consultas removidas ao log
+            data_log = dt.today().strftime("%Y-%m-%d")
+            if data_log not in agenda_log:
+                agenda_log[data_log] = []
+            agenda_log[data_log].extend(consultas_removidas)
+
+            # Salva o log atualizado
+            with open("agenda_log.json", "w") as f:
+                json.dump(agenda_log, f, indent=4, ensure_ascii=False)
+
+        # Salva a agenda atualizada sem as consultas vencidas/canceladas
+        with open("agenda.json", "w") as f:
+            json.dump(agenda, f, indent=4, ensure_ascii=False)
+
+    except FileNotFoundError:
+        console.print("[bold red]Arquivo de agenda não encontrado.")
+    except json.JSONDecodeError:
+        console.print("[bold red]Erro ao ler o arquivo JSON. Verifique a formatação.")
+    except Exception as e:
+        console.print(f"[bold red]Ocorreu um erro inesperado: {e}")
+
 def cancelar():
     try:
         with open("agenda.json", "r") as f:
@@ -100,10 +152,9 @@ def cancelar():
                 mes_atual = hoje.month
                 consultas_mes = {}
 
-                # Mapeia datas para o nome do dia da semana
                 for dia_semana, consultas in agenda.items():
                     for consulta in consultas:
-                        data_consulta = datetime.strptime(consulta["dia"], "%Y-%m-%d")
+                        data_consulta = datetime.strptime(consulta["dia"], "%Y-%m-%d").date()
                         if data_consulta.month == mes_atual:
                             data_formatada = data_consulta.strftime("%d/%m/%Y")
                             consultas_mes.setdefault(data_formatada, []).append((dia_semana, consulta))
@@ -120,7 +171,7 @@ def cancelar():
                     dia_escolhido = console.input("[bold cyan]Digite a data no formato DD/MM/AAAA (ou 0 para voltar): ")
 
                     if dia_escolhido == "0":
-                        break  # Volta para a escolha entre dia ou ID
+                        break
 
                     if dia_escolhido not in consultas_mes:
                         console.print("[bold red]Nenhuma consulta encontrada para essa data.")
@@ -136,19 +187,19 @@ def cancelar():
                         escolha_cancelar = console.input("[bold cyan]Digite o número da consulta para cancelar (ou 0 para voltar): ")
 
                         if escolha_cancelar == "0":
-                            break  # Volta para a escolha da data
+                            break
 
                         try:
                             escolha_cancelar = int(escolha_cancelar) - 1
                             if 0 <= escolha_cancelar < len(consultas_do_dia):
-                                dia_semana, consulta_a_remover = consultas_do_dia[escolha_cancelar]
-                                agenda[dia_semana].remove(consulta_a_remover)
+                                dia_semana, consulta_a_cancelar = consultas_do_dia[escolha_cancelar]
+                                consulta_a_cancelar["confirmacao_paciente"] = "cancelado"
 
                                 with open("agenda.json", "w") as f:
                                     json.dump(agenda, f, indent=4, ensure_ascii=False)
 
-                                console.print("[bold green]Consulta cancelada com sucesso!")
-                                return  # Sai da função após cancelar
+                                console.print("[bold green]Consulta marcada como cancelada com sucesso!")
+                                return
 
                             else:
                                 console.print("[bold red]Escolha inválida.")
@@ -161,7 +212,7 @@ def cancelar():
                     id_consulta = console.input("[bold cyan]Digite o ID da consulta a ser cancelada (ou 0 para voltar): ")
 
                     if id_consulta == "0":
-                        break  # Volta para a escolha entre dia ou ID
+                        break
 
                     try:
                         id_consulta = int(id_consulta)
@@ -170,14 +221,14 @@ def cancelar():
                         for dia_semana, consultas in agenda.items():
                             for consulta in consultas:
                                 if consulta["id_consulta"] == id_consulta:
-                                    agenda[dia_semana].remove(consulta)
+                                    consulta["confirmacao_paciente"] = "cancelado"
                                     consulta_encontrada = True
 
                                     with open("agenda.json", "w") as f:
                                         json.dump(agenda, f, indent=4, ensure_ascii=False)
 
-                                    console.print("[bold green]Consulta cancelada com sucesso!")
-                                    return  # Sai da função após cancelar
+                                    console.print("[bold green]Consulta marcada como cancelada com sucesso!")
+                                    return
 
                         if not consulta_encontrada:
                             console.print("[bold red]Consulta não encontrada!")
@@ -191,8 +242,6 @@ def cancelar():
         console.print("[bold red]Erro ao ler o arquivo JSON. Verifique a formatação.")
     except Exception as e:
         console.print(f"[bold red]Ocorreu um erro inesperado: {e}")
-
-
 
 def obter_semana(data_str):
     return datetime.strptime(data_str, "%Y-%m-%d").isocalendar()[1]
@@ -253,6 +302,7 @@ def agenda_para_lista_medico():
     
 #agendamento feito pelo terminal
 def agendamento():
+    limpar_agenda()
     proximo_mes = True #Enquanto não ficar false vai passando para o proximo mes, no agendamento do dia
     try:
         #parte 1 - Paciente já cadastrado, se nao estiver por favor vá para o cadastramento pelo terminal
