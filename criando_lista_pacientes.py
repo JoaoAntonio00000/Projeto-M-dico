@@ -104,7 +104,7 @@ def cadastrar():
         console.print(f"[cyan]{chave}[/]")
 
     convenio = console.input('[bold yellow]Digite o nome do convênio do paciente (caso não possua, digite "nao"): ').strip().upper()
-    desconto = lista_convenio.get(convenio, "Não informado") * 100
+    desconto = lista_convenio.get(convenio, "Não informado") 
 
     dados = carregar_dados()
 
