@@ -6,7 +6,7 @@
         {
             "id_consulta": 1,
             "dia": "2025-02-27",
-            "hora": "8:00",
+            "hora": "10:15",
             "confirmacao_paciente": "confirmado",
             "medico": "kley",
             "id_medico": 1,

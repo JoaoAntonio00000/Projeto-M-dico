@@ -74,7 +74,6 @@ def cadastrar():
     genero = lista_genero.get(genero, "Não informado")  # Converte o número para o gênero correspondente
 
 
-
     data_nascimento = console.input('[bold yellow]Digite a data de nascimento (DD/MM/AAAA): ').strip()
     data_formatada = validar_data(data_nascimento)
     if not data_formatada:
