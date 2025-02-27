@@ -29,37 +29,39 @@ dados_secretaria = carregar_dados_secretaria()  # Corrigido para carregar dados 
 def validar_horario(horario):
     try:
         datetime.strptime(horario, "%H:%M")
-        return True
+        return True  # Retorna True se o horário estiver no formato correto
     except ValueError:
+        console.print("[bold red]Horário inválido. Use o formato HH:MM.[/bold red]")
         return False
 
 # Validar se o e-mail já existe e se é válido
 def validar_email(email):
     regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     if not re.match(regex, email):
-        console.print("[bold red]E-mail inválido.")
+        console.print("[bold red]E-mail inválido.[/bold red]")
         return False
     
     for usuario in dados_medico:
         if usuario["E-mail"].lower() == email.lower():
-            console.print("[bold red]E-mail já cadastrado.")
+            console.print("[bold red]E-mail já cadastrado.[/bold red]")
             return False
     
-    return True
+    return True  # Retorna True se o e-mail for válido e não estiver cadastrado
+    
 
 # Validar se o CRM já existe e se é válido
 def validar_crm(crm):
     padrao_crm = r"^\d{4,6}/[A-Z]{2}$"  # Exemplo: 123456/SP
     if not re.match(padrao_crm, crm):
-        console.print("[bold red]CRM inválido.")
+        console.print("[bold red]CRM inválido.[/bold red]")
         return False
     
     for usuario in dados_medico:
         if usuario["CRM"].upper() == crm.upper():
-            console.print("[bold red]CRM já cadastrado.")
+            console.print("[bold red]CRM já cadastrado.[/bold red]")
             return False
     
-    return True
+    return True  # Retorna True se o CRM for válido e não estiver cadastrado
 
 # Validar se o CPF já existe e se é válido (para médicos)
 def validar_cpf(cpf):
@@ -94,11 +96,11 @@ def validar_cpf(cpf):
 def validar_cpf_paciente(cpf):
     cpf = cpf.replace("-", '').replace(".", '')
     if not cpf:
-        console.print("[bold red]O CPF é obrigatório.")
+        console.print("[bold red]O CPF é obrigatório.[/bold red]")
         return False  # Retorna False se o CPF estiver vazio.
     
     if len(cpf) != 11 or cpf == cpf[0] * 11:
-        console.print("[bold red]CPF inválido.")
+        console.print("[bold red]CPF inválido.[/bold red]")
         return False  # Retorna False se o CPF tiver tamanho inválido ou for uma sequência de números repetidos.
     
     soma_1 = sum(int(cpf[i]) * (10 - i) for i in range(9))
@@ -111,7 +113,7 @@ def validar_cpf_paciente(cpf):
     
     # Comparando os dois últimos dígitos com os valores calculados
     if cpf[-2:] != f"{digito_1}{digito_2}":
-        console.print("[bold red]CPF inválido.")
+        console.print("[bold red]CPF inválido.[/bold red]")
         return False  # Retorna False se os dígitos verificadores não coincidirem.
     
     return True  # Retorna True se o CPF for válido
@@ -155,13 +157,15 @@ def validar_data(data_nascimento):
     if re.match(padrao, data_nascimento):
         try:
             # Tenta converter para o formato datetime para verificar se a data é válida
-            data_formatada = datetime.strptime(data_nascimento, "%d/%m/%Y")
-            return data_formatada.strftime("%d/%m/%Y")  # Retorna a data formatada corretamente
+            datetime.strptime(data_nascimento, "%d/%m/%Y")
+            return True  # Retorna True se a data for válida
         except ValueError:
             # Se der erro ao tentar converter, a data não é válida
+            console.print("[bold red]Data inválida.[/bold red]")
             return False
     else:
         # Se a data não segue o formato esperado, retorna False
+        console.print("[bold red]Formato de data inválido. Use DD/MM/AAAA.[/bold red]")
         return False
 
 # Validar telefone
@@ -179,8 +183,9 @@ def validar_telefone(telefone):
 def validar_cep(cep):
     padrao_cep = r'^\d{5}-\d{3}$'
     if re.match(padrao_cep, cep):
-        return True
+        return True  # Retorna True se o CEP estiver no formato correto
     else:
+        console.print("[bold red]CEP inválido. O formato correto é 00000-000.[/bold red]")
         return False
 
 # Validar força da senha
@@ -201,4 +206,4 @@ def validar_forca_senha(senha):
         console.print("A senha deve conter pelo menos um caractere especial.", style='error')
         return False
     console.print("Senha adicionada com sucesso!", style='certo')
-    return True
+    return True  # Retorna True se a senha atender a todos os critérios

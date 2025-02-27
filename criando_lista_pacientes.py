@@ -57,7 +57,6 @@ dados_paciente = carregar_dados()
 
 # Função para cadastrar um novo paciente
 def cadastrar():
-    
     dados = carregar_dados()  # Sempre carregar os dados mais recentes
 
     if dados["pacientes"]:
@@ -70,53 +69,60 @@ def cadastrar():
     console.print("\nSelecione o gênero:", style="bold cyan")
     for chave, genero in lista_genero.items():
         console.print(f"[cyan]{chave}[/] - {genero}")
-    genero = int(console.input('[bold yellow]Digite o número correspondente ao gênero: '))
-    genero = lista_genero.get(genero, "Não informado")  # Converte o número para o gênero correspondente
 
+    while True:
+        try:
+            genero = int(console.input('[bold yellow]Digite o número correspondente ao gênero: '))
+            if genero in lista_genero:
+                genero = lista_genero[genero]
+                break
 
+        except ValueError:
+            console.print("[red]⚠️ Entrada inválida. Digite um número válido.[/]")
 
-    data_nascimento = console.input('[bold yellow]Digite a data de nascimento (DD/MM/AAAA): ').strip()
-    data_formatada = validar_data(data_nascimento)
-    if not data_formatada:
-        console.print("[red]⚠️ Data inválida! Tente novamente.[/]")
-        return  
+    while True:
+        data_nascimento = console.input('[bold yellow]Digite a data de nascimento (DD/MM/AAAA): ').strip()
+        data_formatada = validar_data(data_nascimento)
+        if data_formatada:
+            break
 
     while True:
         cpf = console.input('[bold yellow]Digite o CPF do paciente: ').strip()
         if not validar_cpf_paciente(cpf):
+
+            continue
+           
+        else:
             break
+
     while True:
         telefone = console.input('[bold yellow]Digite o telefone do paciente: ').strip()
-        if not validar_telefone(telefone):
+        if validar_telefone(telefone):
             break
+        
+
     while True:
         cep = console.input('[bold yellow]Digite o CEP do paciente: ').strip()
-        if not validar_cep(cep):
+        if validar_cep(cep):
             break
-    
+
+
     while True:
         email = console.input('[bold yellow]Digite o e-mail do paciente: ').strip()
-        if not validar_email(email):
+        if validar_email(email):
             break
+
 
     console.print("\nSelecione o convênio:", style="bold cyan")
     for chave in lista_convenio.keys():
         console.print(f"[cyan]{chave}[/]")
 
     convenio = console.input('[bold yellow]Digite o nome do convênio do paciente (caso não possua, digite "nao"): ').strip().upper()
-    desconto = lista_convenio.get(convenio, "Não informado") * 100
-
-    dados = carregar_dados()
-
-    # Verifica se o CPF já está cadastrado
-    for paciente in dados['pacientes']:
-        if paciente['cpf'] == cpf:
-            console.print("[red]⚠️ Paciente já cadastrado. Tente com outro CPF.[/]")
-            return
+    desconto = lista_convenio.get(convenio, 0) * 100  # Se não existir, assume 0% de desconto
 
     # Adicionando os pacientes ao arquivo json
     dados['pacientes'].append({
-        'ID_PACIENTE' : id_paciente,
+        'ID_PACIENTE': id_paciente,
         'nome': nome,
         'genero': genero,
         'data_nascimento': data_formatada,
@@ -125,11 +131,13 @@ def cadastrar():
         'email': email,
         'cep': cep,
         'convenio': convenio,
-        'desconto' : desconto
+        'desconto': desconto
     })
 
     salvar_dados(dados)
     console.print("[green]✅ Paciente cadastrado com sucesso.[/]")
+
+
 
 # Função para procurar um paciente pelo ID
 def procurar_paciente():

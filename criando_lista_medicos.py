@@ -50,25 +50,20 @@ def adicionar_medico():
         
         while True:
             cpf = console.input("[bold yellow]Informe o CPF do Médico: ").strip()
-            if not validar_cpf(cpf):
-                # Verificar se o CPF já existe
-                if any(medico["CPF"] == cpf for medico in dados_medico):
-                    console.print("[bold red]CPF já cadastrado![/bold red]")
-                else:
-                    break
-            else:
-                console.print("[bold red]CPF inválido! Digite novamente.[/bold red]")
+            if validar_cpf(cpf):
+                break
+  
 
         while True:
             email = console.input("[bold yellow]Informe o email do Médico: [/bold yellow]").strip()
-            if not validar_email(email):
+            if  validar_email(email):
                 break
             else:
                 console.print("[bold red]E-mail inválido! Digite novamente.[/bold red]")
         
         while True:
             crm = console.input("[bold yellow]Informe o CRM do médico: (****/Sigla do Estado)[/bold yellow]").strip()
-            if not validar_crm(crm):
+            if validar_crm(crm):
                 # Verificar se o CRM já existe
                 if any(medico["CRM"] == crm for medico in dados_medico):
                     console.print("[bold red]CRM já cadastrado![/bold red]")

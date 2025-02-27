@@ -87,10 +87,11 @@ def cadastrar_login():
             console.print("[bold red]Data de nascimento inválida. Tente novamente.[/bold red]")
             break
     while True:
-        cpf = console.input("[bold yellow]Digite o seu CPF: ")
-        if validar_cpf(cpf):
-            console.print("[bold red]CPF inválido ou já cadastrado. Tente novamente.[/bold red]")
-            break
+        if tipo == 'médico':
+            cpf = console.input("[bold yellow]Digite o seu CPF: ")
+            if validar_cpf(cpf):
+                console.print("[bold red]CPF inválido ou já cadastrado. Tente novamente.[/bold red]")
+                break
     while True:    
         telefone = console.input("[bold yellow]Digite o seu telefone: ")
         if validar_telefone(telefone):

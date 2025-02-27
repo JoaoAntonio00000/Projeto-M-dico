@@ -1,0 +1,7 @@
+
+    ID do Paciente: 2
+    Nome do Paciente: Ana Barbiero
+    Nome do Médico: Nicole
+    Nome do Exame: Não sou médica me ajuda
+    Resultado do Exame: Ruim
+    

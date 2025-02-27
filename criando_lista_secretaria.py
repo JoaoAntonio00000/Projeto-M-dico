@@ -170,7 +170,7 @@ def exibir_lista_secretaria():
     tabela.add_column("ID", justify="center", style="bold cyan")
     tabela.add_column("Nome", justify="left", style="bold yellow")
     tabela.add_column("E-mail", justify="left", style="bold green")
-    tabela.add_column("Data de Nascimento", justify="left", style="bold green")  # Chave corrigida
+    tabela.add_column("Data de Nascimento", justify="left", style="bold green")
     tabela.add_column("Gênero", justify="left", style="bold green")
     tabela.add_column("CPF", justify="left", style="bold magenta")
 
@@ -179,9 +179,9 @@ def exibir_lista_secretaria():
             str(usuario["ID"]),
             usuario["Nome"],
             usuario["E-mail"],
-            usuario["Data de Nascimento"],  # Chave corrigida
-            usuario['Genero'],
-            usuario['CPF']
+            usuario.get("Data de Nascimento", "Não informada"),  # Usando .get() para evitar KeyError
+            usuario.get("Genero", "Não informado"),
+            usuario.get("CPF", "Não informado")
         )
 
     console.print(tabela)
@@ -209,3 +209,6 @@ def menu():
             break
         else:
             console.print("[bold red]Valor inválido![/bold red]")
+# Iniciar o programa
+if __name__ == "__main__":
+   menu()

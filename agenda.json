@@ -1,6 +1,19 @@
 {
     "segunda": [],
-    "terca": [],
+    "terca": [
+        {
+            "id_consulta": 2,
+            "dia": "2025-02-28",
+            "hora": "9:28",
+            "confirmacao_paciente": "confirmado",
+            "medico": "Dhiogo",
+            "id_medico": 4,
+            "tipo_de_consulta": "presencial",
+            "id_paciente": 6,
+            "email_paciente": "zabotte34@gmail.com",
+            "codigo_consulta": "2YE-NHO-YIC"
+        }
+    ],
     "quarta": [],
     "quinta": [
         {
