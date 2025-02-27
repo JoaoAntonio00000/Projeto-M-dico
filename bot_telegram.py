@@ -24,7 +24,6 @@ async def listar_comandos(update: Update, context: CallbackContext) -> None:
         "/cadastro - Cadastrar-se na clínica\n"
         "/help - Exibir esta lista de comandos\n"
         "/confirmar - Confirmar uma consulta\n"
-        "/cancelar - Cancelar uma confirmação"
     )
     await update.message.reply_text(comandos)
 
