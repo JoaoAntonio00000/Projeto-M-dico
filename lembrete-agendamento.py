@@ -72,7 +72,7 @@ def enviar_email_confirmacao(destinatario, nome_paciente, data_consulta, hora_co
 
 def verificar_envio():
     try:
-        with open('agendamento_semanal_atualizada.json', 'r', encoding= 'utf-8') as arquivo_agenda:
+        with open('agenda.json', 'r', encoding= 'utf-8') as arquivo_agenda:
             agendamentos = json.load(arquivo_agenda)
         now = datetime.datetime.now()
 
