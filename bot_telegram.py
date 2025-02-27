@@ -64,7 +64,7 @@ async def confirmar_consulta(update: Update, context: CallbackContext) -> int:
         with open("agenda.json", "w") as arquivo:
             json.dump(agenda, arquivo, indent=4, ensure_ascii=False)
 
-        await update.message.reply_photo('Confirmação-de-consulta.png')
+        await update.message.reply_photo('Confirmacao-de-consulta.png')
 
     except FileNotFoundError:
         await update.message.reply_text("⚠️ O arquivo de agenda não foi encontrado.")
