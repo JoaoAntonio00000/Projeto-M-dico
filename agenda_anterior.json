@@ -1,0 +1,20 @@
+{
+    "segunda": [],
+    "terca": [],
+    "quarta": [],
+    "quinta": [],
+    "sexta": [
+        {
+            "id_consulta": 5,
+            "dia": "2025-02-28",
+            "hora": "14:00",
+            "confirmacao_paciente": "confirmado",
+            "medico": "kley",
+            "id_medico": 1,
+            "tipo_de_consulta": "presencial",
+            "id_paciente": 2,
+            "email_paciente": "anabarbiero66@gmail.com",
+            "codigo_consulta": "H36-0S6-M45"
+        }
+    ]
+}
