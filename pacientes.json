@@ -37,18 +37,6 @@
             "ID_PACIENTE": 4
         },
         {
-            "ID_PACIENTE": 5,
-            "nome": "H",
-            "genero": "Prefiro n\u00e3o dizer",
-            "data_nascimento": "10/02/1999",
-            "cpf": "44311324048",
-            "telefone": "65999337535",
-            "email": "z",
-            "cep": "70849558",
-            "convenio": "NAO",
-            "desconto": "N\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informadoN\u00e3o informado"
-        },
-        {
             "nome": "joao",
             "cpf": "47857571083",
             "data_nascimento": "10/02/1999",

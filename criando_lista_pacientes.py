@@ -50,7 +50,7 @@ def carregar_dados():
 # Salvar os dados
 def salvar_dados(dados):
     with open(pacientes_json, 'w', encoding="utf-8") as arquivo:  
-        json.dump(dados, arquivo, indent=4)
+        json.dump(dados, arquivo, indent=4, ensure_ascii = False)
 
 dados_paciente = carregar_dados()
 

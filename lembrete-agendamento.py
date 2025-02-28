@@ -23,9 +23,38 @@ password_gerenciador = os.getenv('PASSWORD')
 
 # Função para buscar o nome do paciente
 def nome_lembrete(email_pacient):
-    with open('pacientes.json', 'r', encoding='utf-8') as arquivo_paciente:
-        pacientes = json.load(arquivo_paciente)
-    return next((p['nome'] for p in pacientes if p['email'] == email_pacient), "Paciente sem identificação")
+    try:
+        with open('pacientes.json', 'r', encoding='utf-8') as arquivo_paciente:
+            data = json.load(arquivo_paciente)
+            pacientes = data['pacientes']  # Acessa a lista dentro da chave "pacientes"
+        return next((p['nome'] for p in pacientes if p['email'] == email_pacient), "Paciente sem identificação")
+    except FileNotFoundError:
+        logging.error("Arquivo pacientes.json não encontrado.")
+        return "Paciente sem identificação"
+    except json.JSONDecodeError:
+        logging.error("Erro ao decodificar pacientes.json.")
+        return "Paciente sem identificação"
+    except KeyError:
+        logging.error("Chave 'pacientes' não encontrada no arquivo pacientes.json.")
+        return "Paciente sem identificação"
+
+
+# Função para carregar os IDs de consultas já enviadas
+def carregar_enviados():
+    try:
+        with open('enviados.json', 'r', encoding='utf-8') as arquivo:
+            return json.load(arquivo)
+    except FileNotFoundError:
+        return []  # Se o arquivo não existir, retorna lista vazia
+    except json.JSONDecodeError:
+        logging.error("Erro ao decodificar enviados.json.")
+        return []
+
+# Função para salvar os IDs de consultas enviadas
+def salvar_enviados(enviados):
+    with open('enviados.json', 'w', encoding='utf-8') as arquivo:
+        json.dump(enviados, arquivo, ensure_ascii=False, indent=4)
+
 
 
 # Função para enviar e-mail de lembrete
@@ -49,7 +78,7 @@ def enviar_email_confirmacao(destinatario, nome_paciente, codigo_confirmacao, da
         <p style="color: gray; font-size: 14px;">Este é um e-mail automático, por favor, não responda.</p>
         <br>
         <footer style="margin-top: 20px;">
-            <img src="cid:imagem_assinatura" alt="Assinatura Digital" style="width: 150px; height: auto;">
+            <img src="cid:imagem_assinatura" alt="Assinatura Digital" style="width: 600; height: auto;">
         </footer>
     </body>
     </html>
@@ -81,37 +110,48 @@ def enviar_email_confirmacao(destinatario, nome_paciente, codigo_confirmacao, da
 # Função para verificar e enviar os e-mails
 def verificar_envio():
     try:
-        with open('agenda.json', 'r', encoding='utf-8') as arquivo_agenda:
+        with open('agenda.json', 'r',   encoding='utf-8') as arquivo_agenda:
             agendamentos = json.load(arquivo_agenda)
 
-        print("Conteúdo do JSON carregado:", agendamentos)  # Depuração
-        
+        enviados = carregar_enviados()  # Carrega a lista de consultas já enviadas
         now = datetime.datetime.now()
 
-        # Percorrer os dias da semana no JSON
-        for dia, consultas in agendamentos.items():
-            print(f"Verificando dia: {dia}, número de consultas: {len(consultas)}")  # Depuração
+        now = datetime.datetime.now()
+
+        for dia, consultas in agendamentos.items():# Depuração
+
+            if not isinstance(consultas, list):
+                print(f"⚠️ ERRO: O valor de {dia} não é uma lista! Tipo encontrado: {type(consultas)}")
+                continue  # Pula esse dia
 
             for consulta in consultas:
-                print("Consulta atual:", consulta)  # Depuração
+                
+                id_consulta = consulta.get('id_consulta')
+                if id_consulta in enviados:
+                    continue
 
-                email = consulta['email_paciente']  # Chave correta
-                data_consulta = consulta['dia']  # Chave correta
+                if not isinstance(consulta, dict):
+                    print(f"⚠️ ERRO: Consulta não é um dicionário! Tipo encontrado: {type(consulta)}")
+                    continue  # Pula essa consulta
+
+                email = consulta['email_paciente']  # Teste de acesso
+                print(f"Email do paciente: {email}")  # Depuração
+
+                data_consulta = consulta['dia']
                 hora_consulta = consulta['hora']
                 codigo_confirmacao = consulta["codigo_consulta"]
 
-                # Conversão de data e hora
                 data_hora = datetime.datetime.strptime(f"{data_consulta} {hora_consulta}", "%Y-%m-%d %H:%M")
                 lembrete = data_hora - datetime.timedelta(hours=24)
 
-                # Envio dos e-mails
                 if now >= lembrete and now < data_hora:
                     nome_paciente = nome_lembrete(email)
                     enviar_email_confirmacao(email, nome_paciente, codigo_confirmacao, data_consulta, hora_consulta)
+                    enviados.append(id_consulta)  # Marca como enviado
+                    salvar_enviados(enviados)  # Salva a lista atualizada
     except Exception as e:
         logging.error(f"Erro ao verificar os envios: {e}")
         print(f"Erro ao verificar os envios: {e}")
-
 
 
 # Agendamento do envio dos lembretes
