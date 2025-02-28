@@ -1,18 +1,6 @@
 {
     "pacientes": [
         {
-            "ID_PACIENTE": 2,
-            "nome": "Ana Barbiero",
-            "genero": "Feminino",
-            "data_nascimento": "10/07/2004",
-            "cpf": "09186947109",
-            "telefone": "(65)99901-7888",
-            "email": "anabarbiero66@gmail.com",
-            "cep": "75057-035",
-            "convenio": "PAX-NACIONAL",
-            "desconto": 50.0
-        },
-        {
             "ID_PACIENTE": 3,
             "nome": "Felipe Clink",
             "genero": "Masculino",
@@ -51,7 +39,7 @@
         {
             "ID_PACIENTE": 7,
             "nome": "joao",
-            "genero": "Prefiro n\u00e3o dizer",
+            "genero": "Prefiro não dizer",
             "data_nascimento": true,
             "cpf": "01810264146",
             "telefone": "(65)99933-7535",
@@ -59,6 +47,18 @@
             "cep": "78049-558",
             "convenio": "UNIMED, BRADESCO-SAUDE",
             "desconto": 0
+        },
+        {
+            "nome": "Ana Barbiero",
+            "cpf": "09186947109",
+            "data_nascimento": "10/07/2004",
+            "genero": "1",
+            "telefone": "65999017888",
+            "email": "anabarbiero66@gmail.com",
+            "cep": "78057035",
+            "convenio": "UNIMED",
+            "desconto": 50.0,
+            "ID_PACIENTE": 8
         }
     ]
 }

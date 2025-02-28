@@ -4,6 +4,7 @@ from telegram import Update
 from telegram.ext import ConversationHandler, CommandHandler, MessageHandler, filters, CallbackContext
 import os
 import json
+from criando_lista_pacientes import lista_genero, lista_convenio
 
 ARQUIVO_PACIENTES = "pacientes.json"
 
@@ -62,6 +63,9 @@ async def receber_data_nasc(update: Update, context: CallbackContext) -> int:
         return DATA_NASC
     
     context.user_data["data_nasc"] = data_nasc
+    
+    for chave, genero in lista_genero.items():
+        await update.message.reply_text(f"{chave} - {genero}")
     await update.message.reply_text("Digite seu gênero:")
     return GENERO
 
@@ -99,7 +103,9 @@ async def receber_cep(update: Update, context: CallbackContext) -> int:
         return CEP
 
     context.user_data["cep"] = cep
-    await update.message.reply_text("Possui convênio? (s/n)")
+    for chave, genero in lista_convenio.items():
+        await update.message.reply_text(f"{chave} - {genero}")
+    await update.message.reply_text("Possui convênio?")
     return CONVENIO
 
 async def receber_convenio(update: Update, context: CallbackContext) -> int:

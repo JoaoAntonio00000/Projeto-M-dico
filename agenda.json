@@ -29,5 +29,18 @@
             "codigo_consulta": "19J-7M8-9M2"
         }
     ],
-    "sexta": []
+    "sexta": [
+        {
+            "id_consulta": 3,
+            "dia": "2025-02-28",
+            "hora": "15:00",
+            "confirmacao_paciente": "confirmado",
+            "medico": "Nicole",
+            "id_medico": 3,
+            "tipo_de_consulta": "presencial",
+            "id_paciente": 8,
+            "email_paciente": "anabarbiero66@gmail.com",
+            "codigo_consulta": "2YS-4KU-RZT"
+        }
+    ]
 }
