@@ -5,3 +5,5 @@ PASSWORD = *Senha gerada por app no gmail*
 BOT_TOKEN = *token do bot*
 
 exemplo para usar no arqv .env
+
+link para o bot: t.me/CyberMedical_Bot
