@@ -31,16 +31,16 @@
     ],
     "sexta": [
         {
-            "id_consulta": 3,
+            "id_consulta": 4,
             "dia": "2025-02-28",
-            "hora": "15:00",
-            "confirmacao_paciente": "confirmado",
-            "medico": "Nicole",
-            "id_medico": 3,
+            "hora": "16:00",
+            "confirmacao_paciente": "pendente",
+            "medico": "kley",
+            "id_medico": 1,
             "tipo_de_consulta": "presencial",
             "id_paciente": 8,
             "email_paciente": "anabarbiero66@gmail.com",
-            "codigo_consulta": "2YS-4KU-RZT"
+            "codigo_consulta": "6Q2-D6O-KPX"
         }
     ]
 }
