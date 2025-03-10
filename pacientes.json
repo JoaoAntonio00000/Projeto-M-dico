@@ -2,15 +2,15 @@
     "pacientes": [
         {
             "nome": "Ana Barbiero",
-            "cpf": "30807904058",
+            "cpf": "09186947109",
             "data_nascimento": "10/07/2004",
             "genero": "Feminino",
-            "telefone": "6621666335",
+            "telefone": "65999017888",
             "email": "anabarbiero66@gmail.com",
-            "cep": "16542065",
+            "cep": "78057035",
             "convenio": "UNIMED",
             "desconto": 50.0,
-            "ID_PACIENTE": 2
+            "ID_PACIENTE": 3
         }
     ]
 }

@@ -4,17 +4,18 @@
     "quarta": [],
     "quinta": [],
     "sexta": [
+        
         {
-            "id_consulta": 5,
-            "dia": "2025-02-28",
-            "hora": "14:00",
-            "confirmacao_paciente": "confirmado",
+            "id_consulta": 6,
+            "dia": "2025-03-07",
+            "hora": "10:00",
+            "confirmacao_paciente": "pendente",
             "medico": "kley",
             "id_medico": 1,
             "tipo_de_consulta": "presencial",
-            "id_paciente": 2,
+            "id_paciente": 3,
             "email_paciente": "anabarbiero66@gmail.com",
-            "codigo_consulta": "H36-0S6-M45"
+            "codigo_consulta": "RW2-81C-XNR"
         }
     ]
 }

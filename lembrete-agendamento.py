@@ -159,4 +159,4 @@ schedule.every(1).minute.do(verificar_envio)
 print("⏳ Sistema de lembrete de consultas iniciado...")
 while True:
     schedule.run_pending()
-    time.sleep(60)
+    time.sleep(10)
